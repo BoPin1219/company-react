@@ -1,0 +1,13 @@
+body {
+    background-image: url(/public/imgs/logo/bg/company-bg.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
+.ytbtncolor{
+    background-color: rgba(130, 129, 129, 0.235);
+}
+.btncolor{
+    background-color: rgba(88, 135, 195, 1);
+}

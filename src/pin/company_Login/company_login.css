@@ -1,0 +1,20 @@
+body{
+	color:black;
+	background: url(/public/imgs/logo/bg/company-bg.jpg);
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
+.ytbtncolor1 {
+	border: 0px solid
+	}
+.ytbtncolor2 {
+	background-color: rgba(130, 129, 129, 0.235);
+	border: 0px solid rgba(130, 129, 129, 0.235);
+}
+
+.btncolor {
+	background-color: rgba(88, 135, 195, 1);
+	border: 0px solid rgba(88, 135, 195, 1);
+}

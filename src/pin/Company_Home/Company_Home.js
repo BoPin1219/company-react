@@ -9,6 +9,7 @@ function CompanyHome() {
     const [farmTax, setFarmTax] = useState(firm_info.farm_tax_id)
     const [bossID, setBossID] = useState(firm_info.company_id_number)
     const [companyTel, setCompanyTel] = useState(firm_info.farm_tel)
+    const [farmFax, setFarmFax] = useState(firm_info.farm_fax)
     const [bossMobile, setBossMobile] = useState(firm_info.company_phone)
     const [address, setAddress] = useState(firm_info.farm_address)
     const [companyEmail, setCompanyEmail] = useState(firm_info.company_email)
@@ -18,11 +19,39 @@ function CompanyHome() {
     return (
         <div className="container pt-3 ">
             <div className="row g-5">
+                <div className="col-md-5 col-lg-4 order-md-last">
+                    <h4 className="d-flex justify-content-between align-items-center mb-3">
+                        {/* <span className="text-primary">Your cart</span> */}
+                        {/* <span className="badge bg-primary rounded-pill">3</span> */}
+                    </h4>
+                    <ul className="list-group mb-3">
+                        <li className="list-group-item d-flex justify-content-between lh-sm">
+                            <div>
+                                <h6 className="my-0">註冊日期</h6>
+                            </div>
+                            <span className="text-muted">
+                                {firm_info.creat_at}
+                            </span>
+                        </li>
+                        <li className="list-group-item d-flex justify-content-between lh-sm">
+                            <div>
+                                <h6 className="my-0">上架商品總數</h6>
+                            </div>
+                            <span className="text-muted">24件</span>
+                        </li>
+                        <li className="list-group-item d-flex justify-content-between lh-sm">
+                            <div>
+                                <h6 className="my-0">上架活動總數</h6>
+                            </div>
+                            <span className="text-muted">5</span>
+                        </li>
+                    </ul>
+                </div>
                 <div className="col-md-7 col-lg-8">
                     <h4 className="mb-3">廠商基本資料</h4>
                     <form className="needs-validation">
                         <div className="row g-3">
-                            <div className="col-lg-12">
+                            <div className="col-sm-6">
                                 <label htmlFor="" className="form-label">
                                     類別：
                                 </label>
@@ -30,6 +59,7 @@ function CompanyHome() {
                                     type="text"
                                     className="form-control"
                                     id=""
+                                    disabled
                                     defaultValue={category}
                                     onChange={(e) => {
                                         setCategory(e.target.value)
@@ -65,6 +95,7 @@ function CompanyHome() {
                                     type="text"
                                     className="form-control"
                                     id="lastName"
+                                    disabled
                                     placeholder=""
                                     defaultValue={bossName}
                                     onChange={(e) => {
@@ -83,6 +114,7 @@ function CompanyHome() {
                                     type="text"
                                     className="form-control"
                                     id=""
+                                    disabled
                                     defaultValue={farmTax}
                                     onChange={(e) => {
                                         setFarmTax(e.target.value)
@@ -97,6 +129,7 @@ function CompanyHome() {
                                     type="text"
                                     className="form-control"
                                     id=""
+                                    disabled
                                     defaultValue={bossID}
                                     onChange={(e) => {
                                         setBossID(e.target.value)
@@ -129,6 +162,20 @@ function CompanyHome() {
                                     className="form-control"
                                     id=""
                                     defaultValue={bossMobile}
+                                    onChange={(e) => {
+                                        setBossMobile(e.target.value)
+                                    }}
+                                />
+                            </div>
+                            <div className="col-sm-6">
+                                <label htmlFor="" className="form-label">
+                                    傳真號碼：
+                                </label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id=""
+                                    defaultValue={farmFax}
                                     onChange={(e) => {
                                         setBossMobile(e.target.value)
                                     }}
@@ -195,34 +242,6 @@ function CompanyHome() {
                             </button>
                         </div>
                     </form>
-                </div>
-                <div className="col-md-5 col-lg-4 order-md-last">
-                    <h4 className="d-flex justify-content-between align-items-center mb-3">
-                        {/* <span className="text-primary">Your cart</span> */}
-                        {/* <span className="badge bg-primary rounded-pill">3</span> */}
-                    </h4>
-                    <ul className="list-group mb-3">
-                        <li className="list-group-item d-flex justify-content-between lh-sm">
-                            <div>
-                                <h6 className="my-0">註冊日期</h6>
-                            </div>
-                            <span className="text-muted">
-                                {firm_info.creat_at}
-                            </span>
-                        </li>
-                        <li className="list-group-item d-flex justify-content-between lh-sm">
-                            <div>
-                                <h6 className="my-0">上架商品總數</h6>
-                            </div>
-                            <span className="text-muted">24件</span>
-                        </li>
-                        <li className="list-group-item d-flex justify-content-between lh-sm">
-                            <div>
-                                <h6 className="my-0">上架活動總數</h6>
-                            </div>
-                            <span className="text-muted">5</span>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>

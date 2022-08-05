@@ -1,6 +1,22 @@
+import React, { useState } from 'react'
+
 function CompanyHome() {
+    const firm_info = JSON.parse(localStorage.getItem('companyAuth'))
+
+    const [category, setCategory] = useState(firm_info.farm_type)
+    const [farmName, setFarmName] = useState(firm_info.farm_name)
+    const [bossName, setBossName] = useState(firm_info.company_name)
+    const [farmTax, setFarmTax] = useState(firm_info.farm_tax_id)
+    const [bossID, setBossID] = useState(firm_info.company_id_number)
+    const [companyTel, setCompanyTel] = useState(firm_info.farm_tel)
+    const [bossMobile, setBossMobile] = useState(firm_info.company_phone)
+    const [address, setAddress] = useState(firm_info.farm_address)
+    const [companyEmail, setCompanyEmail] = useState(firm_info.company_email)
+    const [companyPassword, setCompanyPassword] = useState(
+        firm_info.company_password
+    )
     return (
-        <div className="container pt-3">
+        <div className="container pt-3 ">
             <div className="row g-5">
                 <div className="col-md-7 col-lg-8">
                     <h4 className="mb-3">廠商基本資料</h4>
@@ -8,70 +24,17 @@ function CompanyHome() {
                         <div className="row g-3">
                             <div className="col-lg-12">
                                 <label htmlFor="" className="form-label">
-                                    公司類別：
+                                    類別：
                                 </label>
-                                <div className="my-0 d-flex ">
-                                    <div className="form-check pe-2">
-                                        <input
-                                            id=""
-                                            name="paymentMethod"
-                                            type="radio"
-                                            className="form-check-input"
-                                            required=""
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor=""
-                                        >
-                                            農戶
-                                        </label>
-                                    </div>
-                                    <div className="form-check pe-2">
-                                        <input
-                                            id=""
-                                            name="paymentMethod"
-                                            type="radio"
-                                            className="form-check-input"
-                                            required=""
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor=""
-                                        >
-                                            小型商戶(免發票)
-                                        </label>
-                                    </div>
-                                    <div className="form-check pe-2">
-                                        <input
-                                            id=""
-                                            name="paymentMethod"
-                                            type="radio"
-                                            className="form-check-input"
-                                            required=""
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor=""
-                                        >
-                                            個人用戶(非公司)
-                                        </label>
-                                    </div>
-                                    <div className="form-check pe-2">
-                                        <input
-                                            id=""
-                                            name="paymentMethod"
-                                            type="radio"
-                                            className="form-check-input"
-                                            required=""
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor=""
-                                        >
-                                            法人(公司)
-                                        </label>
-                                    </div>
-                                </div>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id=""
+                                    defaultValue={category}
+                                    onChange={(e) => {
+                                        setCategory(e.target.value)
+                                    }}
+                                />
                             </div>
                             <div className="col-sm-6">
                                 <label
@@ -85,6 +48,10 @@ function CompanyHome() {
                                     className="form-control"
                                     id="firstName"
                                     placeholder=""
+                                    defaultValue={farmName}
+                                    onChange={(e) => {
+                                        setFarmName(e.target.value)
+                                    }}
                                 />
                             </div>
                             <div className="col-sm-6">
@@ -99,6 +66,10 @@ function CompanyHome() {
                                     className="form-control"
                                     id="lastName"
                                     placeholder=""
+                                    defaultValue={bossName}
+                                    onChange={(e) => {
+                                        setBossName(e.target.value)
+                                    }}
                                 />
                                 <div className="invalid-feedback">
                                     Valid last name is required.
@@ -112,6 +83,10 @@ function CompanyHome() {
                                     type="text"
                                     className="form-control"
                                     id=""
+                                    defaultValue={farmTax}
+                                    onChange={(e) => {
+                                        setFarmTax(e.target.value)
+                                    }}
                                 />
                             </div>
                             <div className="col-sm-6">
@@ -122,6 +97,10 @@ function CompanyHome() {
                                     type="text"
                                     className="form-control"
                                     id=""
+                                    defaultValue={bossID}
+                                    onChange={(e) => {
+                                        setBossID(e.target.value)
+                                    }}
                                 />
                                 <div className="invalid-feedback">
                                     Valid last name is required.
@@ -135,6 +114,10 @@ function CompanyHome() {
                                     type="text"
                                     className="form-control"
                                     id=""
+                                    defaultValue={companyTel}
+                                    onChange={(e) => {
+                                        setCompanyTel(e.target.value)
+                                    }}
                                 />
                             </div>
                             <div className="col-sm-6">
@@ -145,6 +128,10 @@ function CompanyHome() {
                                     type="text"
                                     className="form-control"
                                     id=""
+                                    defaultValue={bossMobile}
+                                    onChange={(e) => {
+                                        setBossMobile(e.target.value)
+                                    }}
                                 />
                             </div>
                             <div className="col-12">
@@ -155,6 +142,11 @@ function CompanyHome() {
                                     type="text"
                                     className="form-control"
                                     id="address"
+                                    disabled
+                                    defaultValue={address}
+                                    onChange={(e) => {
+                                        setAddress(e.target.value)
+                                    }}
                                 />
                             </div>
                             <hr className="my-4" />
@@ -169,6 +161,10 @@ function CompanyHome() {
                                     className="form-control"
                                     id="email"
                                     placeholder="abc@gmail.com"
+                                    defaultValue={companyEmail}
+                                    onChange={(e) => {
+                                        setCompanyEmail(e.target.value)
+                                    }}
                                 />
                             </div>
                             <div className="col-6">
@@ -184,6 +180,10 @@ function CompanyHome() {
                                     className="form-control"
                                     id="password"
                                     placeholder=""
+                                    defaultValue={companyPassword}
+                                    onChange={(e) => {
+                                        setCompanyPassword(e.target.value)
+                                    }}
                                 />
                             </div>
                             <hr className="my-4" />
@@ -206,7 +206,9 @@ function CompanyHome() {
                             <div>
                                 <h6 className="my-0">註冊日期</h6>
                             </div>
-                            <span className="text-muted">2022/08/28</span>
+                            <span className="text-muted">
+                                {firm_info.creat_at}
+                            </span>
                         </li>
                         <li className="list-group-item d-flex justify-content-between lh-sm">
                             <div>

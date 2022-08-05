@@ -1,13 +1,23 @@
-body {
-    background-image: url(/public/imgs/logo/bg/company-bg.jpg);
-    background-repeat: no-repeat;
+.mybody{
+	color:black;
+	background: url(/public/imgs/logo/bg/company-bg.jpg);
+	background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
+	height: calc(100vh - 77px);
 }
-.ytbtncolor{
-    background-color: rgba(130, 129, 129, 0.235);
+.ytbtncolor1 {
+	border: 0px solid
+	}
+.ytbtncolor2 {
+	background-color: rgba(130, 129, 129, 0.235);
+	border: 0px solid rgba(130, 129, 129, 0.235);
 }
 .btncolor{
     background-color: rgba(88, 135, 195, 1);
+}
+.btncolor {
+	background-color: rgba(88, 135, 195, 1);
+	border: 0px solid rgba(88, 135, 195, 1);
 }

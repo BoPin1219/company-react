@@ -1,10 +1,11 @@
-body{
+.mybody{
 	color:black;
 	background: url(/public/imgs/logo/bg/company-bg.jpg);
 	background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
+	height: calc(100vh - 77px);
 }
 .ytbtncolor1 {
 	border: 0px solid

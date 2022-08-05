@@ -1,16 +1,19 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import CompanyNavbar from './pin/company_navbar/company_navbar'
-import Company from './pin/app'
+import CompanyNavbar from './pin/company_navbar/Company_navbar'
+import Company from './pin/App'
 import './App.css'
+import AuthContextProvider from './pin/component/authContextProvider'
 
 function App() {
     return (
         <>
             <BrowserRouter>
-                <CompanyNavbar />
-                <Routes>
-                    <Route path="/company" element={<Company />} />
-                </Routes>
+                <AuthContextProvider>
+                    <CompanyNavbar />
+                    <Routes>
+                        <Route path="/company/*" element={<Company />} />
+                    </Routes>
+                </AuthContextProvider>
             </BrowserRouter>
         </>
     )

@@ -1,46 +1,45 @@
-import React, {useState} from "react";
-import AuthContext from "./authContext";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react'
+import AuthContext from './authContext'
+import { useNavigate } from 'react-router-dom'
 
-function AuthContextProvider({children}){
+function AuthContextProvider({ children }) {
     const unAuthState = {
         authorized: false,
-        customer_id:0,
+        customer_id: 0,
         username: '',
-        token:''
+        token: '',
     }
 
-    const localAuthStr = localStorage.getItem("auth")
+    const localAuthStr = localStorage.getItem('auth')
     let localAuth = {
         authorized: false,
-        customer_id:0,
+        customer_id: 0,
         username: '',
-        token:''
+        token: '',
     }
 
-    if(localAuth){
-        try{
+    if (localAuth) {
+        try {
             localAuth = JSON.parse(localAuthStr)
-            if(localAuth.username && localAuth.token){
-                localAuth = {...localAuth, authorized:true}
+            if (localAuth.username && localAuth.token) {
+                localAuth = { ...localAuth, authorized: true }
             }
-        }catch(ex){}
+        } catch (ex) {}
     }
 
-    const [auth, setAuth] = useState(localAuth)
+    const [comAuth, setComAuth] = useState(localAuth)
     const navigate = useNavigate()
-    const logout = ()=>{
-        localStorage.removeItem("auth")
-        setAuth({...unAuthState})
+    const logout = () => {
+        localStorage.removeItem('ComAuth')
+        setComAuth({ ...unAuthState })
         navigate('/')
     }
 
-    return(
-        <AuthContext.Provider value={{...auth, setAuth, logout}}>
+    return (
+        <AuthContext.Provider value={{ ...comAuth, setComAuth, logout }}>
             {children}
         </AuthContext.Provider>
     )
-
 }
 
 export default AuthContextProvider

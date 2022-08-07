@@ -47,6 +47,7 @@ function CompanyHome() {
             farm_address: document.form1.farm_address.value,
             company_email: document.form1.company_email.value,
             company_password: document.form1.company_password.value,
+            // creat_at: document.form1.creat_at.value,
             company_id: document.form1.company_id.value,
         }
 
@@ -66,37 +67,18 @@ function CompanyHome() {
             })
     }
 
-    // const firm_info = JSON.parse(localStorage.getItem('companyAuth'))
-
-    // const [category, setCategory] = useState(firm_info.farm_type)
-    // const [farmName, setFarmName] = useState(firm_info.farm_name)
-    // const [bossName, setBossName] = useState(firm_info.company_name)
-    // const [farmTax, setFarmTax] = useState(firm_info.farm_tax_id)
-    // const [bossID, setBossID] = useState(firm_info.company_id_number)
-    // const [companyTel, setCompanyTel] = useState(firm_info.farm_tel)
-    // const [farmFax, setFarmFax] = useState(firm_info.farm_fax)
-    // const [bossMobile, setBossMobile] = useState(firm_info.company_phone)
-    // const [address, setAddress] = useState(firm_info.farm_address)
-    // const [companyEmail, setCompanyEmail] = useState(firm_info.company_email)
-    // const [companyPassword, setCompanyPassword] = useState(
-    //     firm_info.company_password
-    // )
     return (
         <>
             {console.log(companyHome)}
             <div className="container pt-3 ">
-                <div className="row g-5">
+                <div className="row">
                     <div className="col-md-5 col-lg-4 order-md-last">
-                        <h4 className="d-flex justify-content-between align-items-center mb-3">
-                            {/* <span className="text-primary">Your cart</span> */}
-                            {/* <span className="badge bg-primary rounded-pill">3</span> */}
-                        </h4>
                         <ul className="list-group mb-3">
                             <li className="list-group-item d-flex justify-content-between lh-sm">
                                 <div>
                                     <h6 className="my-0">註冊日期</h6>
                                 </div>
-                                <span className="text-muted"></span>
+                                <span className="text-muted "></span>
                             </li>
                             <li className="list-group-item d-flex justify-content-between lh-sm">
                                 <div>
@@ -327,6 +309,24 @@ function CompanyHome() {
                                 </button>
                             </div>
                         </form>
+                        <div className="d-flex justify-content-center align-items-center">
+                            <div
+                                id="spinners"
+                                className="spinner-border text-info"
+                                role="status"
+                                style={{ display: 'none' }}
+                            >
+                                <span className="sr-only">Loading...</span>
+                            </div>
+                            <div
+                                id="info-bar"
+                                className="text-info px-3"
+                                role="alert"
+                                style={{ display: 'none' }}
+                            >
+                                資料編輯成功
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

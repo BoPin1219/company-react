@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 function AuthContextProvider({ children }) {
     const unAuthState = {
         authorized: false,
-        customer_id: 0,
+        company_id: 0,
         username: '',
         token: '',
     }
@@ -13,7 +13,7 @@ function AuthContextProvider({ children }) {
     const localAuthStr = localStorage.getItem('auth')
     let localAuth = {
         authorized: false,
-        customer_id: 0,
+        company_id: 0,
         username: '',
         token: '',
     }

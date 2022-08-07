@@ -6,16 +6,15 @@ import AuthContext from '../component/authContext'
 import React from 'react'
 
 function CompanyLogin() {
-    
     const { setComAuth } = useContext(AuthContext)
     const navigate = useNavigate()
 
     function Login(obj) {
         if (obj.success) {
-            localStorage.setItem('companyAuth', JSON.stringify(obj.data))
+            localStorage.setItem('comAuth', JSON.stringify(obj.data))
             setComAuth({ ...obj.data, authorized: true })
             alert('歡迎登入')
-            navigate('/company', { replace: true })
+            navigate('/company/companyhome', { replace: true })
         } else {
             alert('帳號/密碼錯誤')
         }

@@ -1,6 +1,5 @@
-import './Company_navbar.css'
+import './company_navbar.css'
 import { Link } from 'react-router-dom'
-
 function CompanyNavbar() {
     return (
         <div className="px-3 pt-2 px-5 text-white ">
@@ -24,7 +23,7 @@ function CompanyNavbar() {
                     <ul className="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                         <li>
                             <Link
-                                to="./company"
+                                to="./company/companyhome"
                                 className="nav-link companynabercolor "
                             >
                                 <svg

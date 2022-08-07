@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import CompanyNavbar from './pin/company_navbar/Company_navbar'
-import Company from './pin/App'
+import CompanyNavbar from './pin/company_navbar/company_navbar'
+import Company from './pin/app'
 import './App.css'
 import AuthContextProvider from './pin/component/authContextProvider'
 

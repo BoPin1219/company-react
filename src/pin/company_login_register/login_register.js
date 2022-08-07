@@ -7,7 +7,7 @@ function LoginRegister() {
     function Login(obj) {
         if (obj.success) {
             alert('恭喜註冊成功')
-            navigate('/company/home', { replace: true })
+            navigate('/company/companyhome', { replace: true })
         } else {
             alert('請填寫正確資料')
         }
@@ -16,6 +16,10 @@ function LoginRegister() {
     const checkForm = async (event) => {
         event.preventDefault()
         const data = {
+            farm_name: document.form1.farm_name.value,
+            company_name: document.form1.company_name.value,
+            company_id_number: document.form1.company_id_number.value,
+            company_phone: document.form1.company_phone.value,
             company_email: document.form1.company_email.value,
             company_password: document.form1.company_password.value,
         }
@@ -31,6 +35,7 @@ function LoginRegister() {
         console.log(obj)
         Login(obj)
     }
+
     return (
         <>
             <div className="mybody">
@@ -60,69 +65,70 @@ function LoginRegister() {
                             </div>
                             <div className="modal-header p-4 pb-4 border-bottom-0">
                                 <div className="modal-body p-5 pt-0">
-                                    <form>
+                                    <form
+                                        name="form1"
+                                        method="post"
+                                        onSubmit={checkForm}
+                                    >
                                         <div className="mb-3">
                                             <label
-                                                htmlFor="exampleInputEmail1"
+                                                htmlFor="farm_name"
                                                 className="form-label"
-                                                name="from1"
-                                                method="post"
-                                                onSubmit={checkForm}
                                             >
                                                 廠商名稱：
                                             </label>
                                             <input
-                                                type=""
+                                                type="text"
                                                 className="form-control bg-light bg-opacity-50"
-                                                id="exampleInputEmail1"
-                                                aria-describedby="emailHelp"
+                                                id="farm_name"
+                                                name="farm_name"
                                             />
                                         </div>
                                         <div className="mb-3">
                                             <label
-                                                htmlFor="exampleInputEmail2"
+                                                htmlFor="company_name"
                                                 className="form-label"
                                             >
                                                 負責人：
                                             </label>
                                             <input
-                                                type=""
+                                                type="text"
                                                 className="form-control bg-light bg-opacity-50"
-                                                id="exampleInputEmail2"
-                                                aria-describedby="emailHelp"
+                                                id="company_name"
+                                                name="company_name"
                                             />
                                         </div>
                                         <div className="mb-3">
                                             <label
-                                                htmlFor="exampleInputEmail3"
+                                                htmlFor="company_id_number"
                                                 className="form-label"
                                             >
                                                 身分證字號：
                                             </label>
                                             <input
-                                                type=""
+                                                type="text"
                                                 className="form-control bg-light bg-opacity-50"
-                                                id="exampleInputEmail3"
-                                                aria-describedby="emailHelp"
+                                                id="company_id_number"
+                                                name="company_id_number"
                                             />
                                         </div>
                                         <div className="mb-3">
                                             <label
-                                                htmlFor="exampleInputEmail4"
+                                                htmlFor="company_phone"
                                                 className="form-label"
                                             >
                                                 手機號碼：
                                             </label>
                                             <input
-                                                type=""
+                                                type="text"
                                                 className="form-control bg-light bg-opacity-50"
-                                                id="exampleInputEmail4"
-                                                aria-describedby="emailHelp"
+                                                id="company_phone"
+                                                name="company_phone"
                                             />
                                         </div>
                                         <div className="mb-3">
                                             <label
-                                                htmlFor="exampleInputEmail5"
+                                                htmlFor="company_email"
                                                 className="form-label"
                                             >
                                                 Email address：
@@ -130,13 +136,13 @@ function LoginRegister() {
                                             <input
                                                 type="email"
                                                 className="form-control bg-light bg-opacity-50"
-                                                id="exampleInputEmail5"
-                                                aria-describedby="emailHelp"
+                                                id="company_email"
+                                                name="company_email"
                                             />
                                         </div>
                                         <div className="mb-3">
                                             <label
-                                                htmlFor="exampleInputPassword6"
+                                                htmlFor="company_password"
                                                 className="form-label "
                                             >
                                                 Password：
@@ -144,7 +150,8 @@ function LoginRegister() {
                                             <input
                                                 type="password"
                                                 className="form-control bg-light bg-opacity-50"
-                                                id="exampleInputPassword6"
+                                                id="company_password"
+                                                name="company_password"
                                             />
                                         </div>
                                         <div className="d-grid gap-2">

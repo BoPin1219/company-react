@@ -10,7 +10,7 @@ function AuthContextProvider({ children }) {
         token: '',
     }
 
-    const localAuthStr = localStorage.getItem('auth')
+    const localAuthStr = localStorage.getItem('comAuth')
     let localAuth = {
         authorized: false,
         company_id: 0,
@@ -18,10 +18,12 @@ function AuthContextProvider({ children }) {
         token: '',
     }
 
+    console.log(localAuthStr)
+
     if (localAuth) {
         try {
             localAuth = JSON.parse(localAuthStr)
-            if (localAuth.username && localAuth.token) {
+            if (localAuth.token) {
                 localAuth = { ...localAuth, authorized: true }
             }
         } catch (ex) {}
@@ -30,9 +32,9 @@ function AuthContextProvider({ children }) {
     const [comAuth, setComAuth] = useState(localAuth)
     const navigate = useNavigate()
     const logout = () => {
-        localStorage.removeItem('ComAuth')
+        localStorage.removeItem('comAuth')
         setComAuth({ ...unAuthState })
-        navigate('/')
+        navigate('/company/login')
     }
 
     return (

@@ -41,3 +41,7 @@
 .react_icons path {
   stroke: currentColor;
 }
+
+* {
+  box-sizing: border-box;
+}

@@ -174,7 +174,7 @@ function ProductTable({ data, onDeleted, onUpdate }) {
         <>
             <div className="container">
                 <table className={clsx(styles.product_table, 'table')}>
-                    <thead className="table-dark">
+                    <thead className={clsx(styles.table, 'table-dark')}>
                         <tr>
                             <th scope="col">商品圖片</th>
                             <th scope="col">商品名稱</th>

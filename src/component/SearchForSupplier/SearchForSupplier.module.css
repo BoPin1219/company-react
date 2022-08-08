@@ -11,12 +11,12 @@
   cursor: text;
 }
 
-input {
+.search >input {
   width: calc(100% - 30px);
   border: none;
   background-color: inherit;
 }
-input:focus-visible {
+.search > input:focus-visible {
   outline: none;
 }
 

@@ -30,6 +30,7 @@ const customStyles = {
     },
 }
 Modal.setAppElement('#root')
+
 function ManageList() {
     let subtitle
     const [data, setData] = useState({})
@@ -60,8 +61,6 @@ function ManageList() {
             setData(data)
         }
     }
-
-    const handleAddProduct = () => {}
 
     useEffect(() => {
         getProduct(supplier, page, search)

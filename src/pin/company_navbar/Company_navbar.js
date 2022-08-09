@@ -1,4 +1,4 @@
-import './company_navbar.css'
+import './Company_navbar.css'
 import { Link } from 'react-router-dom'
 import AuthContext from '../component/authContext'
 import React, { useContext } from 'react'

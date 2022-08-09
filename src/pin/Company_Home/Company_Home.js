@@ -15,7 +15,7 @@ function CompanyHome() {
             farm_address: '',
             company_email: '',
             company_password: '',
-            creat_at: '',
+            created_at: '',
             company_id: '',
         },
     ])
@@ -69,7 +69,7 @@ function CompanyHome() {
 
     return (
         <>
-            {console.log(companyHome)}
+            {console.log(companyHome[0])}
             <div className="container pt-3 ">
                 <div className="row">
                     <div className="col-md-5 col-lg-4 order-md-last">
@@ -78,7 +78,9 @@ function CompanyHome() {
                                 <div>
                                     <h6 className="my-0">註冊日期</h6>
                                 </div>
-                                <span className="text-muted "></span>
+                                <span className="text-muted ">
+                                    {companyHome[0].creat_at}
+                                </span>
                             </li>
                             <li className="list-group-item d-flex justify-content-between lh-sm">
                                 <div>

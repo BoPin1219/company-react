@@ -5,26 +5,26 @@ import axios from 'axios'
 import './company_activity.css'
 
 function CompanyActivity() {
-    const [companyActivity, setCompanyActivity] = useState([
+    const [data, setData] = useState([
         {
             activity_img: '',
+            activity_name: '',
             activity_info: '',
             created_at: '',
+            id: '',
+            company_id: '',
         },
     ])
     const loginUser = JSON.parse(localStorage.getItem('comAuth'))
 
-    const getCompanyActivity = async () => {
-        const response = await axios.get(
-            'http://localhost:3600/company/activity',
-            {
-                headers: { loginUser: loginUser.company_id },
-            }
-        )
-        setCompanyActivity(response.data)
+    const getdata = async () => {
+        const response = await axios.get('http://localhost:3600/activity', {
+            headers: { company_id: loginUser.company_id },
+        })
+        setData(response.data)
     }
     useEffect(() => {
-        getCompanyActivity()
+        getdata()
     }, [])
 
     return (
@@ -34,43 +34,52 @@ function CompanyActivity() {
                     <div className="activityT_name">商品管理</div>
                     <div className="addactivity">新增商品</div>
                 </div>
-                <form name="form1">
-                    <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250  position-relative">
-                        <div className="col-auto d-none d-lg-block">
-                            <img
-                                src="./imgs/2-26-600x500.jpg"
-                                width="300"
-                                height="213"
-                                alt=""
-                            />
-                        </div>
-                        <div className="col p-2 d-flex flex-column position-static ">
-                            <div className="align-self-end">
-                                <BiEdit
-                                    size={18}
-                                    style={{
-                                        margin: '0 3px',
-                                        cursor: 'pointer',
-                                    }}
-                                />
+                {data
+                    ? data.map((row) => (
+                          <div
+                              className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250  position-relative"
+                              key={'mm' + row.id}
+                          >
+                              <div className="col-auto d-none d-lg-block">
+                                  <img
+                                      src={`/imgs/${row.activity_img}`}
+                                      width="300"
+                                      height="213"
+                                      alt=""
+                                  />
+                              </div>
+                              <div className="col p-2 d-flex flex-column position-static ">
+                                  <div className="align-self-end">
+                                      <BiEdit
+                                          size={18}
+                                          style={{
+                                              margin: '0 3px',
+                                              cursor: 'pointer',
+                                          }}
+                                      />
 
-                                <RiDeleteBin6Line
-                                    size={18}
-                                    style={{
-                                        margin: '0 3px',
-                                        cursor: 'pointer',
-                                    }}
-                                />
-                            </div>
-                            <h3 className="mb-0">採果/情人谷觀光一日體驗趣</h3>
-                            <hr />
-                            <p className="mb-auto" name="activity_info"></p>
-                            <strong className="d-inline-block  text-success col align-self-end">
-                                2022/07/28止
-                            </strong>
-                        </div>
-                    </div>
-                </form>
+                                      <RiDeleteBin6Line
+                                          size={18}
+                                          style={{
+                                              margin: '0 3px',
+                                              cursor: 'pointer',
+                                          }}
+                                      />
+                                  </div>
+                                  <h3 className="mb-0">
+                                      {`${row.activity_name}`}
+                                  </h3>
+                                  <hr />
+                                  <p className="mb-auto">
+                                      {`${row.activity_info}`}
+                                  </p>
+                                  <strong className="d-inline-block  text-success col align-self-end">
+                                      {`${row.created_at}`}
+                                  </strong>
+                              </div>
+                          </div>
+                      ))
+                    : null}
             </div>
         </div>
     )

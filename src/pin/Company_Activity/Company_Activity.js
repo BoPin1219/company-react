@@ -7,11 +7,13 @@ import './company_activity.css'
 function CompanyActivity() {
     const [data, setData] = useState([
         {
-            activity_img: '',
+            sid: '',
+            card_img: '',
             activity_name: '',
-            activity_info: '',
+            card_area: '',
+            card_city: '',
+            card_info: '',
             created_at: '',
-            id: '',
             company_id: '',
         },
     ])
@@ -38,11 +40,11 @@ function CompanyActivity() {
                     ? data.map((row) => (
                           <div
                               className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250  position-relative"
-                              key={'mm' + row.id}
+                              key={'mm' + row.sid}
                           >
                               <div className="col-auto d-none d-lg-block">
                                   <img
-                                      src={`/imgs/${row.activity_img}`}
+                                      src={`/images/activity/${row.card_img}`}
                                       width="300"
                                       height="213"
                                       alt=""
@@ -66,14 +68,13 @@ function CompanyActivity() {
                                           }}
                                       />
                                   </div>
-                                  <h3 className="mb-0">
-                                      {`${row.activity_name}`}
-                                  </h3>
+                                  <h3 className="mb-0">{`${row.card_area}`}</h3>
                                   <hr />
                                   <p className="mb-auto">
-                                      {`${row.activity_info}`}
+                                      {`${row.card_info}`}
                                   </p>
                                   <strong className="d-inline-block  text-success col align-self-end">
+                                      建立時間：
                                       {`${row.created_at}`}
                                   </strong>
                               </div>

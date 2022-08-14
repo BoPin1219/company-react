@@ -7,11 +7,11 @@ import './company_activity.css'
 function CompanyActivity() {
     const [data, setData] = useState([
         {
-            activity_img: '',
-            activity_name: '',
-            activity_info: '',
+            card_img: '',
+            card_area: '',
+            card_info: '',
             created_at: '',
-            id: '',
+            sid: '',
             company_id: '',
         },
     ])
@@ -42,7 +42,7 @@ function CompanyActivity() {
                           >
                               <div className="col-auto d-none d-lg-block">
                                   <img
-                                      src={`/imgs/${row.activity_img}`}
+                                      src={`/images/activity/${row.card_img}`}
                                       width="300"
                                       height="213"
                                       alt=""
@@ -66,12 +66,10 @@ function CompanyActivity() {
                                           }}
                                       />
                                   </div>
-                                  <h3 className="mb-0">
-                                      {`${row.activity_name}`}
-                                  </h3>
+                                  <h3 className="mb-0">{`${row.card_area}`}</h3>
                                   <hr />
                                   <p className="mb-auto">
-                                      {`${row.activity_info}`}
+                                      {`${row.card_info}`}
                                   </p>
                                   <strong className="d-inline-block  text-success col align-self-end">
                                       {`${row.created_at}`}

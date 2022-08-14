@@ -4,21 +4,19 @@ import qs from 'qs'
 import clsx from 'clsx'
 import { Link } from 'react-router-dom'
 import { useQuery } from '../../hooks'
-import { useSearchParams } from 'react-router-dom'
 
 function Pagination({ page, totalPage }) {
-    const query = useQuery()
-    const [URL, setURL] = useSearchParams()
+    const [query, setQuery] = useQuery()
 
     const changeNextPage = () => {
         if (page < totalPage) {
-            setURL({ ...query, page: page + 1 })
+            setQuery({ page: page + 1 })
         }
     }
 
     const changePrevPage = () => {
         if (page > 1) {
-            setURL({ ...query, page: page - 1 })
+            setQuery({ page: page - 1 })
         }
     }
 

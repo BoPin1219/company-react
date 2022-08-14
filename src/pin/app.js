@@ -3,8 +3,8 @@ import React from 'react'
 
 import CompanyLogin from './company_Login/company_login'
 import LoginRegister from './company_login_register/login_register'
-import CompanyHome from './company_home/company_home'
-import CompanyActivity from './company_activity/company_activity'
+import CompanyHome from './Company_Home/Company_Home'
+import CompanyActivity from './Company_Activity/Company_Activity'
 import ManageList from '../page/ManageList'
 
 function Company() {

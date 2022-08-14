@@ -43,8 +43,8 @@ function ProductManage({ onClose, sid }) {
                                     </div>
                                 </div>
                                 <div className={styles.img_else}>
-                                    {data.product_img &&
-                                        data.product_img
+                                    {data.img_urls &&
+                                        data.img_urls
                                             .filter((v, i) => {
                                                 return i !== 0
                                             })
@@ -168,12 +168,12 @@ function ProductManage({ onClose, sid }) {
                             <div className={styles.close} onClick={onClose}>
                                 <GrClose color="#fff" />
                             </div>
-                            <div
+                            {/* <div
                                 className={styles.edit}
                                 onClick={() => {}} //TODO:
                             >
                                 <p>修改資料</p>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

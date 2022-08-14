@@ -53,11 +53,10 @@ export async function getProductItem(sid) {
     return {}
 }
 
-export async function getSupplierProduct(supplier, page, search) {
+export async function getSupplierProduct(supplier) {
     const params = {
         supplier,
-        page,
-        search,
+        perPage: 999999999,
     }
 
     const res = await axios.get(AB_GET_PRODUCT, { params })

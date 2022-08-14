@@ -1,6 +1,5 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState } from 'react'
 import clsx from 'clsx'
-import { useSelector } from 'react-redux'
 import styles from './ProductTable.module.css'
 import { CgMoreO } from 'react-icons/cg'
 import { BiEdit } from 'react-icons/bi'
@@ -39,109 +38,9 @@ Modal.setAppElement('#root')
 function ProductTable({ data, onDeleted, onUpdate }) {
     let subtitle
 
-    const tableSelect = useSelector((state) => state.product.tableSelect)
     const [modalIsOpen, setIsOpen] = useState(false)
     const [editIsOpen, setEditIsOpen] = useState(false)
     const [sid, setSid] = useState('')
-
-    const filteredRows = useMemo(() => {
-        const { type, status, inventory } = tableSelect
-        const { value: typeValue } = type || {}
-        const { value: statusValue } = status || {}
-        const { value: inventoryValue } = inventory || {}
-        if (data.rows) {
-            return data.rows.filter((el) => {
-                let result = true
-
-                if (inventoryValue) {
-                    switch (inventoryValue) {
-                        case 1: {
-                            if (!el.product_inventory && el.product_inventory) {
-                                result = false
-                            }
-                            break
-                        }
-                        case 2: {
-                            if (el.product_inventory > 10) {
-                                result = false
-                            }
-                            break
-                        }
-                        case 3: {
-                            if (
-                                el.product_inventory > 20 ||
-                                el.product_inventory <= 10
-                            ) {
-                                result = false
-                            }
-                            break
-                        }
-                        case 4: {
-                            if (el.product_inventory < 20) {
-                                result = false
-                            }
-                            break
-                        }
-                        default: {
-                        }
-                    }
-                }
-
-                if (result && typeValue) {
-                    switch (typeValue) {
-                        case 1: {
-                            if (!el.product_type) {
-                                result = false
-                            }
-                            break
-                        }
-                        case 2: {
-                            if (el.product_type !== 1) {
-                                result = false
-                            }
-                            break
-                        }
-                        case 3: {
-                            if (el.product_type !== 2) {
-                                result = false
-                            }
-                            break
-                        }
-                        default: {
-                        }
-                    }
-                }
-
-                if (result && statusValue) {
-                    switch (statusValue) {
-                        case 1: {
-                            if (el.statusValue && !el.statusValue) {
-                                result = false
-                            }
-                            break
-                        }
-                        case 2: {
-                            if (el.statusValue) {
-                                result = false
-                            }
-                            break
-                        }
-                        case 3: {
-                            if (!el.statusValue) {
-                                result = false
-                            }
-                            break
-                        }
-                        default: {
-                        }
-                    }
-                }
-
-                return result // true, false
-            })
-        }
-        return []
-    }, [data, tableSelect])
 
     function openModal() {
         setIsOpen(true)
@@ -152,7 +51,6 @@ function ProductTable({ data, onDeleted, onUpdate }) {
     }
 
     function afterOpenModal() {
-        // references are now sync'd and can be accessed.
         subtitle.style.color = '#f00'
     }
 
@@ -174,7 +72,7 @@ function ProductTable({ data, onDeleted, onUpdate }) {
         <>
             <div className="container">
                 <table className={clsx(styles.product_table, 'table')}>
-                    <thead className="table-dark">
+                    <thead className={clsx(styles.table, 'table-dark')}>
                         <tr>
                             <th scope="col">商品圖片</th>
                             <th scope="col">商品名稱</th>
@@ -187,7 +85,7 @@ function ProductTable({ data, onDeleted, onUpdate }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredRows.map((v, i) => {
+                        {data.map((v, i) => {
                             return (
                                 <tr key={v.sid}>
                                     <td style={{}}>

@@ -1,6 +1,6 @@
 .previewimg {
   width: 20%;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 .previewimg img {
@@ -18,4 +18,5 @@
   text-align: center;
   line-height: 1.8;
   cursor: pointer;
+  margin-bottom: 10px;
 }

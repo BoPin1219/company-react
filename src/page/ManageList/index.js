@@ -1,5 +1,7 @@
 import styles from './ManageList.module.css'
-import { useState, useEffect } from 'react'
+import _ from 'lodash'
+import { useState, useEffect, useMemo } from 'react'
+import { useSelector } from 'react-redux'
 import ProductTableSelect from '../../component/ProductTableSelect'
 import ProductTable from '../../component/ProductTable'
 import { getSupplierProduct } from '../../api/product'
@@ -33,13 +35,161 @@ Modal.setAppElement('#root')
 
 function ManageList() {
     let subtitle
+
+    const perPage = 12
     const [data, setData] = useState({})
-    const query = useQuery()
-    const page = query['page'] || 1
+    const [query, setQuery] = useQuery()
+    const page = Number(query['page']) || 1
     const search = query['search']
     const member_info = JSON.parse(localStorage.getItem('comAuth'))
     const supplier = member_info.company_id
     const [modalIsOpen, setIsOpen] = useState(false)
+
+    const tableSelect = useSelector((state) => state.product.tableSelect)
+    const filteredRows = useMemo(() => {
+        const { type, status, inventory } = tableSelect
+        const { value: typeValue } = type || {}
+        const { value: statusValue } = status || {}
+        const { value: inventoryValue } = inventory || {}
+        if (data.rows) {
+            return data.rows.filter((el) => {
+                let result = true
+
+                if (search) {
+                    result = el.product_name.includes(search)
+                }
+
+                if (result && inventoryValue) {
+                    switch (inventoryValue) {
+                        case 1: {
+                            if (!el.product_inventory && el.product_inventory) {
+                                result = false
+                            }
+                            break
+                        }
+                        case 2: {
+                            if (el.product_inventory > 10) {
+                                result = false
+                            }
+                            break
+                        }
+                        case 3: {
+                            if (
+                                el.product_inventory > 20 ||
+                                el.product_inventory <= 10
+                            ) {
+                                result = false
+                            }
+                            break
+                        }
+                        case 4: {
+                            if (el.product_inventory < 10) {
+                                result = false
+                            }
+                            break
+                        }
+                        default: {
+                        }
+                    }
+                }
+
+                if (result && typeValue) {
+                    switch (typeValue) {
+                        case 1: {
+                            if (!el.product_type) {
+                                result = false
+                            }
+                            break
+                        }
+                        case 2: {
+                            if (el.product_type !== 1) {
+                                result = false
+                            }
+                            break
+                        }
+                        case 3: {
+                            if (el.product_type !== 2) {
+                                result = false
+                            }
+                            break
+                        }
+                        case 4: {
+                            if (el.product_type !== 3) {
+                                result = false
+                            }
+                            break
+                        }
+                        case 5: {
+                            if (el.product_type !== 4) {
+                                result = false
+                            }
+                            break
+                        }
+                        case 6: {
+                            if (el.product_type !== 5) {
+                                result = false
+                            }
+                            break
+                        }
+                        case 7: {
+                            if (el.product_type !== 6) {
+                                result = false
+                            }
+                            break
+                        }
+                        case 8: {
+                            if (el.product_type !== 7) {
+                                result = false
+                            }
+                            break
+                        }
+                        case 9: {
+                            if (el.product_type !== 8) {
+                                result = false
+                            }
+                            break
+                        }
+                        default: {
+                        }
+                    }
+                }
+
+                if (result && statusValue) {
+                    switch (statusValue) {
+                        case 1: {
+                            if (el.statusValue && !el.statusValue) {
+                                result = false
+                            }
+                            break
+                        }
+                        case 2: {
+                            if (el.statusValue) {
+                                result = false
+                            }
+                            break
+                        }
+                        case 3: {
+                            if (!el.statusValue) {
+                                result = false
+                            }
+                            break
+                        }
+                        default: {
+                        }
+                    }
+                }
+
+                return result // true, false
+            })
+        }
+        return []
+    }, [data, tableSelect, search])
+
+    const slicedRows = useMemo(() => {
+        return filteredRows.slice((page - 1) * perPage, page * perPage)
+    }, [page, filteredRows])
+
+    const totalPage = Math.ceil(filteredRows.length / perPage)
 
     function openModal() {
         setIsOpen(true)
@@ -54,17 +204,23 @@ function ManageList() {
         setIsOpen(false)
     }
 
-    const getProduct = async (supplier, page, search) => {
-        const data = await getSupplierProduct(supplier, page, search)
-        if (data && data.rows) {
-            console.log(data)
-            setData(data)
+    const getProduct = async () => {
+        if (!_.isNil(supplier)) {
+            const data = await getSupplierProduct(supplier)
+            if (data && data.rows) {
+                // console.log(data)
+                setData(data)
+            }
         }
     }
 
     useEffect(() => {
-        getProduct(supplier, page, search)
-    }, [supplier, page, search])
+        getProduct()
+    }, [supplier])
+
+    useEffect(() => {
+        setQuery({ page: 1 })
+    }, [supplier, tableSelect, search])
 
     //TODO:search完 清url
     return (
@@ -81,20 +237,17 @@ function ManageList() {
                         </div>
                     </div>
                 </div>
-                <ProductTableSelect data={data} />
+                <ProductTableSelect />
                 <ProductTable
-                    data={data}
+                    data={slicedRows}
                     onDeleted={getProduct}
                     onUpdate={getProduct}
                 />
                 <div className="container">
                     <div className={styles.pagination}>
-                        {data && data.totalPage ? (
-                            <Pagination
-                                page={data.page}
-                                totalPage={data.totalPage}
-                            />
-                        ) : null}
+                        {totalPage > 1 && (
+                            <Pagination page={page} totalPage={totalPage} />
+                        )}
                     </div>
                 </div>
             </div>

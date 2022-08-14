@@ -77,6 +77,12 @@
   padding: 20 50 50 50;
   position: relative;
 }
+
+.content {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
 .close {
   width: 35px;
   height: 35px;

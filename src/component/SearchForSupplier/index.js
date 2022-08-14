@@ -1,13 +1,11 @@
 import styles from './SearchForSupplier.module.css'
 import { GoSearch } from 'react-icons/go'
 import React, { useEffect, useRef, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
 import { useQuery } from '../../hooks'
 
 function SearchForSupplier() {
     const inputRef = useRef()
-    const query = useQuery()
-    const [searchParams, setSearchParams] = useSearchParams()
+    const [query, setQuery] = useQuery()
     const [value, setValue] = useState()
     const search = query['search']
 
@@ -17,26 +15,20 @@ function SearchForSupplier() {
     }
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            const q = {
-                ...query,
+            setQuery({
                 page: 1,
                 search: value,
-            }
-
-            setSearchParams(q)
+            })
         }
     }
 
     function handleIconClicked(e) {
         e.stopPropagation()
 
-        const q = {
-            ...query,
+        setQuery({
             page: 1,
             search: value,
-        }
-
-        setSearchParams(q)
+        })
     }
 
     function handleRootClicked() {

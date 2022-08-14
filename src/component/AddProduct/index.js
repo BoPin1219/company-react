@@ -196,7 +196,7 @@ function AddProduct({ sid, onClose, onUpdate, isNew }) {
     return (
         <>
             <div className={styles.body}>
-                <div className="container">
+                <div className={clsx('container', styles.content)}>
                     <div className={styles.empty}></div>
                     <div className={styles.close} onClick={onClose}>
                         <GrClose color="#fff" />

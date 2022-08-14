@@ -106,7 +106,7 @@ function CompanyNavbar() {
                         <li>
                             {authorized ? (
                                 <button
-                                    className='cnbnt'
+                                    className="cnbnt"
                                     onClick={() => {
                                         companyLogout()
                                     }}

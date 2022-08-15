@@ -1,12 +1,19 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useSearchParams } from 'react-router-dom'
 import qs from 'qs'
 
 export function useQuery() {
-  const { search } = useLocation()
+    const { search } = useLocation()
+    const [params, setParams] = useSearchParams()
 
-  return React.useMemo(
-    () => qs.parse(search, { ignoreQueryPrefix: true }),
-    [search]
-  )
+    const query = React.useMemo(
+        () => qs.parse(search, { ignoreQueryPrefix: true }),
+        [search]
+    )
+
+    const setQuery = (newValue) => {
+        setParams({ ...query, ...newValue })
+    }
+
+    return [query, setQuery]
 }

@@ -7,13 +7,11 @@ import './company_activity.css'
 function CompanyActivity() {
     const [data, setData] = useState([
         {
-            sid: '',
             card_img: '',
-            activity_name: '',
             card_area: '',
-            card_city: '',
             card_info: '',
             created_at: '',
+            sid: '',
             company_id: '',
         },
     ])

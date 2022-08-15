@@ -9,6 +9,8 @@ import FileUploadSample from '../FileUploadSample'
 import { submitData, uploadImages, changeData } from '../../api/root'
 import { getProductItem } from '../../api/product'
 import { GrClose } from 'react-icons/gr'
+import PickTime from '../PickTime'
+import { format } from 'date-fns'
 
 const statusOptions = [
     { value: 1, label: '上架中' },
@@ -68,6 +70,7 @@ function AddProduct({ sid, onClose, onUpdate, isNew }) {
         photo: [],
     })
     const [images, setImages] = useState([])
+    const [startDate, setStartDate] = useState(null)
 
     const [addHashTag, setAddHashTag] = useState({})
 
@@ -159,9 +162,12 @@ function AddProduct({ sid, onClose, onUpdate, isNew }) {
             }
             console.log(hashtag)
             const data = { ...newValue, hashtag, photo: pictures }
+            // const time = startDate.toJSON().slice(0, 19).replace('T', ' ')
+            // console.log(time) //2015-07-23 11:26:00
+            const time = format(startDate, 'yyyy-MM-dd kk:mm:ss')
 
             if (sid) {
-                const sidData = { ...data, sid: sid }
+                const sidData = { ...data, sid: sid, time }
                 changeData(sidData)
                     .then((result) => {
                         console.log('Success:', result)
@@ -172,7 +178,8 @@ function AddProduct({ sid, onClose, onUpdate, isNew }) {
                         console.error('Error:', error)
                     })
             } else {
-                submitData(data)
+                const addData = { ...data, time }
+                submitData(addData)
                     .then((result) => {
                         console.log('Success:', result)
                         onClose()
@@ -189,7 +196,7 @@ function AddProduct({ sid, onClose, onUpdate, isNew }) {
     return (
         <>
             <div className={styles.body}>
-                <div className="container">
+                <div className={clsx('container', styles.content)}>
                     <div className={styles.empty}></div>
                     <div className={styles.close} onClick={onClose}>
                         <GrClose color="#fff" />
@@ -199,7 +206,7 @@ function AddProduct({ sid, onClose, onUpdate, isNew }) {
                             <div className={styles.title}>
                                 {isNew ? '新增商品' : '修改商品'}
                             </div>
-                            <input type="hidden" name="sid" value="sid" />
+
                             <div className="row">
                                 <div className="col-6">
                                     <label className={styles.label}>
@@ -210,6 +217,7 @@ function AddProduct({ sid, onClose, onUpdate, isNew }) {
                                             name="name"
                                             type="text"
                                             ref={inputRef}
+                                            style={{ width: '100%' }}
                                             placeholder="請輸入商品名稱"
                                             value={value.name}
                                             onChange={(e) =>
@@ -350,10 +358,12 @@ function AddProduct({ sid, onClose, onUpdate, isNew }) {
                                     <label className={styles.label}>
                                         產品照片：
                                     </label>
-                                    <FileUploadSample
-                                        onChange={setImages}
-                                        photos={value.photo}
-                                    />
+                                    <div className={styles.photos}>
+                                        <FileUploadSample
+                                            onChange={setImages}
+                                            photos={value.photo}
+                                        />
+                                    </div>
                                 </div>
                                 <div className="col-6">
                                     <label className={styles.label}>
@@ -381,12 +391,12 @@ function AddProduct({ sid, onClose, onUpdate, isNew }) {
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="col-12">
+                                <div className="col-6">
                                     <label className={styles.label}>
                                         產品介紹：
                                     </label>
                                     <textarea
-                                        rows={4}
+                                        rows={8}
                                         value={value.details}
                                         onChange={(e) =>
                                             handleChange(
@@ -397,26 +407,34 @@ function AddProduct({ sid, onClose, onUpdate, isNew }) {
                                         className={styles.textarea}
                                     ></textarea>
                                 </div>
+                                <div className="col-6">
+                                    <label className={styles.label}>
+                                        預約上架：
+                                    </label>
+                                    <div
+                                        style={{
+                                            border: '1px solid #3a2c2c',
+                                            padding: '10px 20px',
+                                            borderRadius: ' 2px',
+                                        }}
+                                    >
+                                        <PickTime
+                                            value={startDate}
+                                            onChange={(newValue) => {
+                                                setStartDate(newValue)
+                                                if (newValue) {
+                                                    // 未上架
+                                                    setValue((prev) => ({
+                                                        ...prev,
+                                                        status: 0,
+                                                    }))
+                                                }
+                                            }}
+                                        />
+                                    </div>
+                                </div>
                             </div>
-                            <div className="row">
-                                {/* <div className="col-12">
-                <label className={styles.label}>是否預約上架時間：</label>
-                <input
-                  type="checkbox"
-                  value="null"
-                  name="immediately"
-                  onChange={this.onChangeLike}
-                />
-                <label for="immediately">立即上架</label>
-                <input
-                  type="checkbox"
-                  value="1"
-                  name="reserve"
-                  onChange={this.onChangeLike}
-                />
-                <label for="reserve">預約上架</label>
-              </div> */}
-                            </div>
+
                             <div
                                 className={clsx(
                                     'row',
@@ -426,7 +444,7 @@ function AddProduct({ sid, onClose, onUpdate, isNew }) {
                                 onClick={handleSubmit}
                             >
                                 <div className={styles.button}>
-                                    {isNew ? '確定新增商品' : '確定修改商品'}
+                                    {isNew ? '新增商品' : '修改商品'}
                                 </div>
                             </div>
                         </form>

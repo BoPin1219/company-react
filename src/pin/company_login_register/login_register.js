@@ -4,15 +4,6 @@ import { useNavigate } from 'react-router-dom'
 function LoginRegister() {
     const navigate = useNavigate()
 
-    function Login(obj) {
-        if (obj.success) {
-            alert('恭喜註冊成功')
-            navigate('/company/companyhome', { replace: true })
-        } else {
-            alert('請填寫正確資料')
-        }
-    }
-
     const checkForm = async (event) => {
         event.preventDefault()
         const data = {
@@ -34,6 +25,15 @@ function LoginRegister() {
         const obj = await r.json()
         console.log(obj)
         Login(obj)
+
+        function Login(obj) {
+            if (obj.success) {
+                alert('恭喜註冊成功')
+                navigate('/company/login', { replace: true })
+            } else {
+                alert('請填寫正確資料')
+            }
+        }
     }
 
     return (

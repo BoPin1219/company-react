@@ -19,6 +19,7 @@ function App() {
                                     path="/company/*"
                                     element={<Company />}
                                 />
+
                             </Routes>
                         </AuthContextProvider>
                     </BrowserRouter>

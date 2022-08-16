@@ -18,7 +18,7 @@ function AuthContextProvider({ children }) {
         token: '',
     }
 
-    console.log(localAuthStr)
+    // console.log(localAuthStr)
 
     if (localAuth) {
         try {

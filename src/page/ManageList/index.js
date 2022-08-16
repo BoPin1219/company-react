@@ -258,7 +258,11 @@ function ManageList() {
                 onRequestClose={closeModal}
                 style={customStyles}
             >
-                <AddProduct onClose={closeModal} isNew={true} />
+                <AddProduct
+                    onClose={closeModal}
+                    isNew={true}
+                    onUpdate={getProduct}
+                />
             </Modal>
         </>
     )

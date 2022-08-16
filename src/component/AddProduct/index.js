@@ -3,6 +3,8 @@ import styles from './AddProduct.module.css'
 import clsx from 'clsx'
 import React, { useRef, useEffect, useState } from 'react'
 import Select from 'react-select'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 import ProductHashTag from '../ProductHashTag'
 import { HASHTAG, UNIT, TYPE, SUPPLIER } from '../../config/variables'
 import FileUploadSample from '../FileUploadSample'
@@ -11,6 +13,8 @@ import { getProductItem } from '../../api/product'
 import { GrClose } from 'react-icons/gr'
 import PickTime from '../PickTime'
 import { format } from 'date-fns'
+
+const MySwal = withReactContent(Swal)
 
 const statusOptions = [
     { value: 1, label: '上架中' },
@@ -58,20 +62,19 @@ const customStyles = {
 function AddProduct({ sid, onClose, onUpdate, isNew }) {
     const inputRef = useRef()
     const [value, setValue] = useState({
-        name: null,
-        supplier: null,
-        type: null,
-        unit: null,
-        status: null,
-        expire: null,
-        price: null,
-        inventory: null,
-        details: null,
+        name: '',
+        supplier: {},
+        type: {},
+        unit: {},
+        status: {},
+        expire: '',
+        price: '',
+        inventory: '',
+        details: '',
         photo: [],
     })
     const [images, setImages] = useState([])
     const [startDate, setStartDate] = useState(null)
-
     const [addHashTag, setAddHashTag] = useState({})
 
     useEffect(() => {
@@ -129,7 +132,7 @@ function AddProduct({ sid, onClose, onUpdate, isNew }) {
             return { ...prev, [key]: !value }
         })
 
-        console.log('handleToggleHashTag', addHashTag)
+        // console.log('handleToggleHashTag', addHashTag)
     }
 
     const handleSubmit = async () => {
@@ -160,44 +163,65 @@ function AddProduct({ sid, onClose, onUpdate, isNew }) {
                 supplier: +value.supplier.value,
                 status: +value.status.value,
             }
-            console.log(hashtag)
+            // console.log(hashtag)
             const data = { ...newValue, hashtag, photo: pictures }
             // const time = startDate.toJSON().slice(0, 19).replace('T', ' ')
             // console.log(time) //2015-07-23 11:26:00
-            const time = format(startDate, 'yyyy-MM-dd kk:mm:ss')
+            const time = startDate
+                ? format(startDate, 'yyyy-MM-dd kk:mm:ss')
+                : null
 
+            let promiseFn
             if (sid) {
                 const sidData = { ...data, sid: sid, time }
-                changeData(sidData)
-                    .then((result) => {
-                        console.log('Success:', result)
-                        onUpdate(sidData)
-                        onClose()
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error)
-                    })
+                promiseFn = changeData(sidData)
             } else {
                 const addData = { ...data, time }
-                submitData(addData)
-                    .then((result) => {
-                        console.log('Success:', result)
-                        onClose()
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error)
-                    })
+                promiseFn = submitData(addData)
             }
+
+            MySwal.fire({
+                title: <p>資料儲存中</p>,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    MySwal.showLoading()
+                },
+            }).then(async () => {
+                const result = await promiseFn
+                onUpdate()
+                onClose()
+                MySwal.fire(`${result.success}`)
+            })
         } catch (e) {
             console.error(e)
         }
     }
 
+    const handleToWriting = () => {
+        setValue({
+            name: '有機檸檬',
+            supplier: supplierOptions[0],
+            type: typeOptions[1],
+            unit: unitOptions[7],
+            status: statusOptions[0],
+            expire: 7,
+            price: 80,
+            inventory: 20,
+            details:
+                '農場的四季檸檬外觀翠綠飽滿，皮較厚、有籽，果肉呈淡黃色，無論是新鮮度、香氣都很棒！酸香又多汁，加上是有機栽種，不用擔心農藥殘留，能安心料理和享用。',
+            photo: [],
+        })
+    }
     return (
         <>
             <div className={styles.body}>
                 <div className={clsx('container', styles.content)}>
                     <div className={styles.empty}></div>
+                    <div
+                        className={styles.writeAll}
+                        onClick={handleToWriting}
+                    ></div>
                     <div className={styles.close} onClick={onClose}>
                         <GrClose color="#fff" />
                     </div>
@@ -422,13 +446,12 @@ function AddProduct({ sid, onClose, onUpdate, isNew }) {
                                             value={startDate}
                                             onChange={(newValue) => {
                                                 setStartDate(newValue)
-                                                if (newValue) {
-                                                    // 未上架
-                                                    setValue((prev) => ({
-                                                        ...prev,
-                                                        status: 0,
-                                                    }))
-                                                }
+                                                setValue((prev) => ({
+                                                    ...prev,
+                                                    status: statusOptions[
+                                                        newValue ? 1 : 0
+                                                    ],
+                                                }))
                                             }}
                                         />
                                     </div>

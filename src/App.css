@@ -45,3 +45,13 @@
 * {
   box-sizing: border-box;
 }
+
+.swal2-styled.swal2-confirm{
+  /* background-color:#7066e0 */
+  background-color:#82CA35;
+  margin:0
+}
+
+.swal2-styled.swal2-confirm:focus{
+  box-shadow: 0 0 0 3px #82ca357f;
+}

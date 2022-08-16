@@ -10,6 +10,9 @@ import { UNIT, TYPE } from '../../config/variables'
 import Box from '../Box'
 import AddProduct from '../AddProduct'
 import { deleteData } from '../../api/root'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal)
 
 const customStyles = {
     content: {
@@ -61,7 +64,19 @@ function ProductTable({ data, onDeleted, onUpdate }) {
 
     const handleDelete = async (sid) => {
         console.log(sid)
-        // alert(`確定要刪除這筆商品嗎？`)
+        MySwal.fire('確定要刪除這筆商品嗎？')
+        // MySwal.fire({
+        //     title: '確定要刪除這筆商品嗎？',
+        //     icon: 'warning',
+        //     showCancelButton: true,
+        //     confirmButtonColor: '#3085d6',
+        //     cancelButtonColor: '#d33',
+        //     confirmButtonText: '確定，刪除這筆資料!',
+        // }).then((result) => {
+        //     if (result.isConfirmed) {
+        //         Swal.fire('已刪除!')
+        //     }
+        // })
         const result = await deleteData(sid)
         if (result.success) {
             onDeleted(sid)

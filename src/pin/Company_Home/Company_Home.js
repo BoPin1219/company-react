@@ -60,7 +60,7 @@ function CompanyHome() {
         })
             .then((r) => r.json())
             .then((obj) => {
-                console.log(obj)
+                // console.log(obj)
                 if (obj.success) {
                     alert('更改成功')
                 }
@@ -69,7 +69,7 @@ function CompanyHome() {
 
     return (
         <>
-            {console.log(companyHome[0])}
+            {/* {console.log(companyHome[0])} */}
             <div className="container pt-3 ">
                 <div className="row">
                     <div className="col-md-5 col-lg-4 order-md-last">

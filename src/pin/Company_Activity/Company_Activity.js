@@ -1,10 +1,12 @@
 import { BiEdit } from 'react-icons/bi'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import './company_activity.css'
 
 function CompanyActivity() {
+    const navigate = useNavigate()
     const [data, setData] = useState([
         {
             card_img: '',
@@ -16,7 +18,12 @@ function CompanyActivity() {
         },
     ])
     const loginUser = JSON.parse(localStorage.getItem('comAuth'))
-
+    const goToadd = () => {
+        navigate(`/company/activity/add`)
+    }
+    const goToedit = () => {
+        navigate(`/company/activity/edit`)
+    }
     const getdata = async () => {
         const response = await axios.get('http://localhost:3600/activity', {
             headers: { company_id: loginUser.company_id },
@@ -32,7 +39,9 @@ function CompanyActivity() {
             <div className="container ">
                 <div className="row justify-content-between align-items-baseline mb-4">
                     <div className="activityT_name">商品管理</div>
-                    <div className="addactivity">新增商品</div>
+                    <div className="addactivity" onClick={() => goToadd()}>
+                        新增商品
+                    </div>
                 </div>
                 {data
                     ? data.map((row) => (
@@ -51,6 +60,7 @@ function CompanyActivity() {
                               <div className="col p-2 d-flex flex-column position-static ">
                                   <div className="align-self-end">
                                       <BiEdit
+                                          onClick={() => goToedit()}
                                           size={18}
                                           style={{
                                               margin: '0 3px',

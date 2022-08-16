@@ -35,7 +35,7 @@ function CompanyLogin() {
             },
         })
         const obj = await r.json()
-        console.log(obj)
+        // console.log(obj)
         Login(obj)
     }
     return (

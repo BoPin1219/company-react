@@ -37,7 +37,10 @@ function FileUploadSample({ onChange, photos }) {
         setIsFilePicked(true)
         setSelectedFile(values)
         setImgServerUrl('')
-
+        // const newPicArray = values.map((v) => {
+        //     return v.name
+        // })
+        // console.log(newPicArray)
         onChange(values)
     }
 

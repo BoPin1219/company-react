@@ -12,9 +12,6 @@ import { format } from 'date-fns'
 
 Modal.setAppElement('#root')
 function Addactivity({ sid, onClose, onUpdate, isNew }) {
-    const company_info_id = localStorage.getItem('comAuth')
-        ? JSON.parse(localStorage.getItem('comAuth')).company_id
-        : null
     const inputRef = useRef()
     const [value, setValue] = useState({
         card_area: null,
@@ -36,6 +33,56 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
     const [startDate, setStartDate] = useState(null)
 
     const [addHashTag, setAddHashTag] = useState({})
+
+    useEffect(() => {
+        if (sid) {
+            const item = async (sid) => {
+                const data = await getProductItem(sid)
+                console.log(data)
+                const { card_area } = data
+                const { address } = data
+                const { phone } = data
+                const { fax } = data
+                const { time } = data
+                const { card_info } = data
+                const { card_info1 } = data
+                const { card_a } = data
+                const { card_b } = data
+                const { card_c } = data
+                const { card_d } = data
+                const { card_e } = data
+                const { Map_b } = data
+                const { company_infoImg } = data
+
+                // const type = _.find(typeOptions, { value: typeValue })
+                // const unit = _.find(unitOptions, { value: unitValue })
+                // const supplier = _.find(supplierOptions, {
+                //     value: supplierValue,
+                // })
+                // const status = _.find(statusOptions, { value: statusValue })
+
+                const newValue = {
+                    card_area,
+                    address,
+                    phone,
+                    fax,
+                    time,
+                    card_info,
+                    card_info1,
+                    card_a,
+                    card_b,
+                    card_c,
+                    card_d,
+                    card_e,
+                    Map_b,
+                    company_infoImg,
+                }
+                setValue(newValue)
+                // setAddHashTag(hashtag)
+            }
+            item(sid)
+        }
+    }, [sid])
 
     const handleChange = (key, newValue) => {
         setValue((prev) => {
@@ -68,57 +115,42 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
 
             if (images.length) {
                 const result = await uploadImages(images)
-
+                // console.log(pictures, result)
                 pictures = result.data.map((v) => v.name)
             }
             const newValue = {
                 ...value,
             }
             const data = { ...newValue, photo: pictures }
+            // const time = startDate.toJSON().slice(0, 19).replace('T', ' ')
+            // console.log(time) //2015-07-23 11:26:00
+            const time = format(startDate, 'yyyy-MM-dd kk:mm:ss')
+
+            if (sid) {
+                const sidData = { ...data, sid: sid, time }
+                changeData(sidData)
+                    .then((result) => {
+                        console.log('Success:', result)
+                        onUpdate(sidData)
+                        onClose()
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error)
+                    })
+            } else {
+                const addData = { ...data, time }
+                submitData(addData)
+                    .then((result) => {
+                        console.log('Success:', result)
+                        onClose()
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error)
+                    })
+            }
         } catch (e) {
             console.error(e)
         }
-    }
-
-    const getPicNewArray = () => {
-        const newPicArray = images.map((v) => {
-            return v.name
-        })
-        return JSON.stringify(newPicArray)
-    }
-
-    const inesertNewInfo = () => {
-        const packageToSend = {
-            card_area: value.card_area,
-            company_id: company_info_id,
-            card_img: 123,
-            company_infoImg: getPicNewArray(),
-            address: value.address,
-            phone: value.phone,
-            fax: value.fax,
-            card_city: value.phone,
-            card_info: value.card_info,
-            card_info1: value.card_info1,
-            card_a: value.card_a,
-            card_b: value.card_b,
-            card_c: value.card_c,
-            card_d: value.card_d,
-            card_e: value.card_e,
-            Map_a: value.Map_b,
-            Map_b: value.Map_b,
-        }
-        // console.log(packageToSend)
-        fetch('http://localhost:3600/activity/add', {
-            method: 'POST',
-            body: JSON.stringify(packageToSend),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then((r) => r.json())
-            .then((obj) => {
-                console.log(obj)
-            })
     }
 
     return (
@@ -126,8 +158,14 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
             <div className={styles.body}>
                 <div className={clsx('container', styles.content)}>
                     <div className={styles.empty}></div>
+                    {/* <div className={styles.close} onClick={onClose}>
+                        <GrClose color="#fff" />
+                    </div> */}
                     <div className={styles.container}>
                         <form className={styles.form} name="form">
+                            <div className={styles.title}>
+                                {isNew ? '新增商品' : '修改商品'}
+                            </div>
                             <div className="row">
                                 <div className="col-6">
                                     <label className={styles.label}>
@@ -139,13 +177,13 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                             type="text"
                                             ref={inputRef}
                                             style={{ width: '100%' }}
-                                            placeholder="請輸入活動名稱"
+                                            placeholder="請輸入商品名稱"
                                             value={value.card_area}
                                             onChange={(e) =>
-                                                setValue({
-                                                    ...value,
-                                                    card_area: e.target.value,
-                                                })
+                                                handleChange(
+                                                    'name',
+                                                    e.target.value
+                                                )
                                             }
                                         />
                                     </div>
@@ -160,13 +198,13 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                             type="text"
                                             ref={inputRef}
                                             style={{ width: '100%' }}
-                                            placeholder="請輸入活動地址"
+                                            placeholder="請輸入商品名稱"
                                             value={value.address}
                                             onChange={(e) =>
-                                                setValue({
-                                                    ...value,
-                                                    address: e.target.value,
-                                                })
+                                                handleChange(
+                                                    'name',
+                                                    e.target.value
+                                                )
                                             }
                                         />
                                     </div>
@@ -181,13 +219,13 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                             type="text"
                                             ref={inputRef}
                                             style={{ width: '100%' }}
-                                            placeholder="請輸入連絡電話"
+                                            placeholder="請輸入商品名稱"
                                             value={value.phone}
                                             onChange={(e) =>
-                                                setValue({
-                                                    ...value,
-                                                    phone: e.target.value,
-                                                })
+                                                handleChange(
+                                                    'name',
+                                                    e.target.value
+                                                )
                                             }
                                         />
                                     </div>
@@ -202,13 +240,13 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                             type="text"
                                             ref={inputRef}
                                             style={{ width: '100%' }}
-                                            placeholder="請輸入傳真號碼"
+                                            placeholder="請輸入商品名稱"
                                             value={value.fax}
                                             onChange={(e) =>
-                                                setValue({
-                                                    ...value,
-                                                    fax: e.target.value,
-                                                })
+                                                handleChange(
+                                                    'name',
+                                                    e.target.value
+                                                )
                                             }
                                         />
                                     </div>
@@ -225,13 +263,13 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                             type="text"
                                             ref={inputRef}
                                             style={{ width: '100%' }}
-                                            placeholder="請輸入開放時間"
+                                            placeholder="請輸入商品名稱"
                                             value={value.time}
                                             onChange={(e) =>
-                                                setValue({
-                                                    ...value,
-                                                    time: e.target.value,
-                                                })
+                                                handleChange(
+                                                    'name',
+                                                    e.target.value
+                                                )
                                             }
                                         />
                                     </div>
@@ -246,10 +284,10 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                         rows={8}
                                         value={value.card_info}
                                         onChange={(e) =>
-                                            setValue({
-                                                ...value,
-                                                card_info: e.target.value,
-                                            })
+                                            handleChange(
+                                                'details',
+                                                e.target.value
+                                            )
                                         }
                                         className={styles.textarea}
                                     ></textarea>
@@ -262,10 +300,10 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                         rows={8}
                                         value={value.card_info1}
                                         onChange={(e) =>
-                                            setValue({
-                                                ...value,
-                                                card_info1: e.target.value,
-                                            })
+                                            handleChange(
+                                                'details',
+                                                e.target.value
+                                            )
                                         }
                                         className={styles.textarea}
                                     ></textarea>
@@ -280,10 +318,10 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                         rows={8}
                                         value={value.card_a}
                                         onChange={(e) =>
-                                            setValue({
-                                                ...value,
-                                                card_a: e.target.value,
-                                            })
+                                            handleChange(
+                                                'details',
+                                                e.target.value
+                                            )
                                         }
                                         className={styles.textarea}
                                     ></textarea>
@@ -297,10 +335,10 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                         rows={8}
                                         value={value.card_b}
                                         onChange={(e) =>
-                                            setValue({
-                                                ...value,
-                                                card_b: e.target.value,
-                                            })
+                                            handleChange(
+                                                'details',
+                                                e.target.value
+                                            )
                                         }
                                         className={styles.textarea}
                                     ></textarea>
@@ -313,10 +351,10 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                         rows={8}
                                         value={value.card_c}
                                         onChange={(e) =>
-                                            setValue({
-                                                ...value,
-                                                card_c: e.target.value,
-                                            })
+                                            handleChange(
+                                                'details',
+                                                e.target.value
+                                            )
                                         }
                                         className={styles.textarea}
                                     ></textarea>
@@ -329,10 +367,10 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                         rows={8}
                                         value={value.card_d}
                                         onChange={(e) =>
-                                            setValue({
-                                                ...value,
-                                                card_d: e.target.value,
-                                            })
+                                            handleChange(
+                                                'details',
+                                                e.target.value
+                                            )
                                         }
                                         className={styles.textarea}
                                     ></textarea>
@@ -346,10 +384,10 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                         rows={8}
                                         value={value.card_e}
                                         onChange={(e) =>
-                                            setValue({
-                                                ...value,
-                                                card_e: e.target.value,
-                                            })
+                                            handleChange(
+                                                'details',
+                                                e.target.value
+                                            )
                                         }
                                         className={styles.textarea}
                                     ></textarea>
@@ -362,10 +400,10 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                         rows={8}
                                         value={value.Map_b}
                                         onChange={(e) =>
-                                            setValue({
-                                                ...value,
-                                                Map_b: e.target.value,
-                                            })
+                                            handleChange(
+                                                'details',
+                                                e.target.value
+                                            )
                                         }
                                         className={styles.textarea}
                                     ></textarea>
@@ -374,10 +412,7 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                     <label className={styles.label}>
                                         活動照片：
                                     </label>
-                                    <div
-                                        className={styles.photos}
-                                        onBlur={() => {}}
-                                    >
+                                    <div className={styles.photos}>
                                         <FileUploadSample
                                             onChange={setImages}
                                             photos={value.company_infoImg}
@@ -389,17 +424,9 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                             <div className="d-flex justify-content-center ">
                                 <div
                                     className={clsx('mb-5', 'pe-2')}
-                                    // onClick={handleSubmit}
+                                    onClick={handleSubmit}
                                 >
-                                    <div
-                                        className={styles.button}
-                                        onClick={() => {
-                                            handleSubmit()
-                                            inesertNewInfo()
-                                        }}
-                                    >
-                                        新增活動
-                                    </div>
+                                    <div className={styles.button}>活動</div>
                                 </div>
                                 <div
                                     className={clsx('mb-5', 'ps-2')}

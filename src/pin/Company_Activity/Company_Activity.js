@@ -21,7 +21,8 @@ function CompanyActivity() {
     const goToadd = () => {
         navigate(`/company/activity/add`)
     }
-    const goToedit = () => {
+    const goToedit = (sid) => {
+        sessionStorage.setItem('activitysid', sid)
         navigate(`/company/activity/edit`)
     }
     const getdata = async () => {
@@ -60,7 +61,7 @@ function CompanyActivity() {
                               <div className="col p-2 d-flex flex-column position-static ">
                                   <div className="align-self-end">
                                       <BiEdit
-                                          onClick={() => goToedit()}
+                                          onClick={() => goToedit(row.sid)}
                                           size={18}
                                           style={{
                                               margin: '0 3px',

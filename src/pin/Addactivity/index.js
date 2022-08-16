@@ -17,19 +17,19 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
         : null
     const inputRef = useRef()
     const [value, setValue] = useState({
-        card_area: null,
-        address: null,
-        phone: null,
-        fax: null,
-        time: null,
-        card_info: null,
-        card_info1: null,
-        card_a: null,
-        card_b: null,
-        card_c: null,
-        card_d: null,
-        card_e: null,
-        Map_b: null,
+        card_area: '',
+        address: '',
+        phone: '',
+        fax: '',
+        time: '',
+        card_info: '',
+        card_info1: '',
+        card_a: '',
+        card_b: '',
+        card_c: '',
+        card_d: '',
+        card_e: '',
+        Map_b: '',
         company_infoImg: [],
     })
     const [images, setImages] = useState([])

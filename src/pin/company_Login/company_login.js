@@ -2,6 +2,7 @@ import './company_login.css'
 import { useNavigate } from 'react-router-dom'
 import { useState, useContext } from 'react'
 import AuthContext from '../component/authContext'
+import Swal from 'sweetalert2'
 
 import React from 'react'
 
@@ -13,10 +14,25 @@ function CompanyLogin() {
         if (obj.success) {
             localStorage.setItem('comAuth', JSON.stringify(obj.data))
             setComAuth({ ...obj.data, authorized: true })
-            alert('歡迎登入')
-            navigate('/company/companyhome', { replace: true })
+            Swal.fire({
+                icon: 'success',
+                title: '歡迎登入',
+                showConfirmButton: true,
+                confirmButtonText: '確認',
+                confirmButtonColor: '#709D40',
+            }).then(() => {
+                navigate('/company/companyhome', { replace: true })
+            })
         } else {
-            alert('帳號/密碼錯誤')
+            Swal.fire({
+                icon: 'error',
+                title: '帳號密碼錯誤',
+                showConfirmButton: true,
+                confirmButtonText: '請輸入正確資訊',
+                confirmButtonColor: '#709D40',
+            }).then(() => {
+                navigate('/company/login', { replace: true })
+            })
         }
     }
 
@@ -38,6 +54,10 @@ function CompanyLogin() {
         // console.log(obj)
         Login(obj)
     }
+    function autoInput() {
+        document.form1.company_email.value = 'test01@gmail.com'
+        document.form1.company_password.value = '123456'
+    }
     return (
         <>
             <div className="mybody">
@@ -58,7 +78,7 @@ function CompanyLogin() {
                                         廠商登入
                                     </button>
                                     <button
-                                        className="btn btn btn-dark ytbtncolor2"
+                                        className="btn btn ytbtncolor2"
                                         type="button"
                                         onClick={() => {
                                             navigate('/company/register', {
@@ -105,18 +125,29 @@ function CompanyLogin() {
                                                     name="company_password"
                                                 />
                                             </div>
-                                            <div className="mb-3 form-check">
-                                                <input
-                                                    type="checkbox"
-                                                    className="form-check-input"
-                                                    id="exampleCheck1"
-                                                />
-                                                <label
-                                                    className="form-check-label"
-                                                    htmlFor="exampleCheck1"
-                                                >
-                                                    記住帳號
-                                                </label>
+                                            <div className="d-flex justify-content-between">
+                                                <div className="mb-3 form-check">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="form-check-input"
+                                                        id="exampleCheck1"
+                                                    />
+                                                    <label
+                                                        className="form-check-label"
+                                                        htmlFor="exampleCheck1"
+                                                    >
+                                                        記住帳號
+                                                    </label>
+                                                </div>
+                                                <div className="mb-3 ">
+                                                    <button
+                                                        className="btn btn btn-sm pin-btnlogon"
+                                                        type="button"
+                                                        onClick={autoInput}
+                                                    >
+                                                        快速填寫
+                                                    </button>
+                                                </div>
                                             </div>
                                             <div className="d-grid gap-2">
                                                 <button

@@ -1,14 +1,10 @@
-import _ from 'lodash'
 import styles from './AddProduct.module.css'
 import clsx from 'clsx'
 import React, { useRef, useEffect, useState } from 'react'
 import Modal from 'react-modal'
 import FileUploadSample from '../../component/FileUploadSample'
-import { submitData, uploadImages, changeData } from '../../api/root'
-import { getProductItem } from '../../api/product'
-import { GrClose } from 'react-icons/gr'
-
-import { format } from 'date-fns'
+import { uploadImages } from '../../api/root'
+import { useNavigate } from 'react-router-dom'
 
 Modal.setAppElement('#root')
 function Editactivity({ sid, onClose, onUpdate, isNew }) {
@@ -19,12 +15,13 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
         ? JSON.parse(localStorage.getItem('comAuth')).company_id
         : null
     const inputRef = useRef()
+    const navigate = useNavigate()
     const [value, setValue] = useState({
         card_area: '',
         address: '',
         phone: '',
         fax: '',
-        time: '',
+        time: '星期一 08:00 ~ 17:00 / 星期二 08:00 ~ 17:00 / 星期三 08:00 ~ 17:00 / 星期四 08:00 ~ 17:00 / 星期五 08:00 ~ 17:00 / 星期六 08:00 ~ 17:00 / 星期日 08:00 ~ 17:00 ',
         card_info: '',
         card_info1: '',
         card_a: '',
@@ -32,6 +29,7 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
         card_c: '',
         card_d: '',
         card_e: '',
+        Map_a: '',
         Map_b: '',
         company_infoImg: [],
     })
@@ -45,7 +43,9 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
             return { ...prev, [key]: newValue }
         })
     }
-
+    const goBack = () => {
+        navigate(`/company/activity`)
+    }
     const handleToggleHashTag = (key) => {
         const value = addHashTag[key]
         setAddHashTag((prev) => {
@@ -126,7 +126,7 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
             card_c: value.card_c,
             card_d: value.card_d,
             card_e: value.card_e,
-            Map_a: value.Map_b,
+            Map_a: value.Map_a,
             Map_b: value.Map_b,
         }
         // console.log(packageToSend)
@@ -217,7 +217,7 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
                                 </div>
                                 <div className="col-6">
                                     <label className={styles.label}>
-                                        傳真：
+                                        農場傳真：
                                     </label>
                                     <div className={styles.text}>
                                         <input
@@ -237,30 +237,23 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
                                     </div>
                                 </div>
                             </div>
+
                             <div className="row">
                                 <div className="col-6">
                                     <label className={styles.label}>
                                         開放時間：
                                     </label>
-                                    <div className={styles.text}>
-                                        <input
-                                            name="name"
-                                            type="text"
-                                            ref={inputRef}
-                                            style={{ width: '100%' }}
-                                            placeholder="請輸入開放時間"
-                                            value={value.time}
-                                            onChange={(e) =>
-                                                setValue({
-                                                    ...value,
-                                                    time: e.target.value,
-                                                })
-                                            }
-                                        />
-                                    </div>
+                                    <textarea
+                                        value={value.time}
+                                        onChange={(e) =>
+                                            setValue({
+                                                ...value,
+                                                time: e.target.value,
+                                            })
+                                        }
+                                        className={styles.textarea}
+                                    ></textarea>
                                 </div>
-                            </div>
-                            <div className="row">
                                 <div className="col-6">
                                     <label className={styles.label}>
                                         活動介紹：
@@ -293,8 +286,6 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
                                         className={styles.textarea}
                                     ></textarea>
                                 </div>
-                            </div>
-                            <div className="row">
                                 <div className="col-6">
                                     <label className={styles.label}>
                                         體驗活動：
@@ -311,7 +302,6 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
                                         className={styles.textarea}
                                     ></textarea>
                                 </div>
-
                                 <div className="col-6">
                                     <label className={styles.label}>
                                         遊覽景點：
@@ -360,7 +350,6 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
                                         className={styles.textarea}
                                     ></textarea>
                                 </div>
-
                                 <div className="col-6">
                                     <label className={styles.label}>
                                         伴手禮與農特產：
@@ -372,6 +361,22 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
                                             setValue({
                                                 ...value,
                                                 card_e: e.target.value,
+                                            })
+                                        }
+                                        className={styles.textarea}
+                                    ></textarea>
+                                </div>
+                                <div className="col-6">
+                                    <label className={styles.label}>
+                                        地圖導覽：
+                                    </label>
+                                    <textarea
+                                        rows={8}
+                                        value={value.Map_a}
+                                        onChange={(e) =>
+                                            setValue({
+                                                ...value,
+                                                Map_a: e.target.value,
                                             })
                                         }
                                         className={styles.textarea}
@@ -395,7 +400,21 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
                                 </div>
                                 <div className="col-6">
                                     <label className={styles.label}>
-                                        活動照片：
+                                        活動導覽照片：
+                                    </label>
+                                    <div
+                                        className={styles.photos}
+                                        onBlur={() => {}}
+                                    >
+                                        <FileUploadSample
+                                            onChange={setImages}
+                                            photos={value.company_infoImg}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="col-6">
+                                    <label className={styles.label}>
+                                        活動導覽照片：
                                     </label>
                                     <div
                                         className={styles.photos}
@@ -428,7 +447,12 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
                                     className={clsx('mb-5', 'ps-2')}
                                     onClick={handleSubmit}
                                 >
-                                    <div className={styles.button}>返回</div>
+                                    <div
+                                        className={styles.button}
+                                        onClick={() => goBack()}
+                                    >
+                                        返回
+                                    </div>
                                 </div>
                             </div>
                         </form>

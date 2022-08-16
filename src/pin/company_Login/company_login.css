@@ -26,3 +26,11 @@
 	padding-left: 16px;
 	padding-right: 16px;
 }
+.pin-btnlogon{
+	border: 0px ;
+	color: rgba(0, 0, 0, 0);
+}
+.pin-btnlogon:hover{
+background-color: rgba(240, 248, 255, 0);
+transition: linear 0.2s;
+}

@@ -1,5 +1,6 @@
 import './login_register.css'
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 function LoginRegister() {
     const navigate = useNavigate()
@@ -28,12 +29,34 @@ function LoginRegister() {
 
         function Login(obj) {
             if (obj.success) {
-                alert('恭喜註冊成功')
-                navigate('/company/login', { replace: true })
+                Swal.fire({
+                    icon: 'success',
+                    title: '註冊成功',
+                    showConfirmButton: true,
+                    confirmButtonText: '確認',
+                    confirmButtonColor: '#709D40',
+                }).then(() => {
+                    navigate('/company/login', { replace: true })
+                })
             } else {
-                alert('請填寫正確資料')
+                Swal.fire({
+                    icon: 'error',
+                    title: '註冊申請失敗',
+                    showConfirmButton: true,
+                    confirmButtonText: '請輸入正確資訊',
+                    confirmButtonColor: '#709D40',
+                })
             }
         }
+    }
+
+    function autoInput() {
+        document.form1.farm_name.value = '舊山線休閒農業區'
+        document.form1.company_name.value = '王小明'
+        document.form1.company_id_number.value = 'F123456789'
+        document.form1.company_phone.value = '0912123123'
+        document.form1.company_email.value = 'test0824@test.com'
+        document.form1.company_password.value = '123456'
     }
 
     return (
@@ -59,11 +82,15 @@ function LoginRegister() {
                                 >
                                     廠商登入
                                 </button>
-                                <button className="btn btn " type="button">
+                                <button
+                                    className="btn btn ytbtncolor1"
+                                    type="button"
+                                >
                                     廠商註冊
                                 </button>
                             </div>
-                            <div className="modal-header p-4 pb-4 border-bottom-0">
+
+                            <div className="modal-header p-4 pb-4 border-bottom-0 position-relative">
                                 <div className="modal-body p-5 pt-0">
                                     <form
                                         name="form1"
@@ -76,12 +103,20 @@ function LoginRegister() {
                                                 className="form-label"
                                             >
                                                 廠商名稱：
+                                                <button
+                                                    className="btn btn btn-sm pin-register position-absolute bottom-0 end-0"
+                                                    type="button"
+                                                    onClick={autoInput}
+                                                >
+                                                    快速填寫
+                                                </button>
                                             </label>
                                             <input
                                                 type="text"
                                                 className="form-control bg-light bg-opacity-50"
                                                 id="farm_name"
                                                 name="farm_name"
+                                                placeholder="請輸入廠商名稱"
                                             />
                                         </div>
                                         <div className="mb-3">
@@ -96,6 +131,7 @@ function LoginRegister() {
                                                 className="form-control bg-light bg-opacity-50"
                                                 id="company_name"
                                                 name="company_name"
+                                                placeholder="請輸入負責人姓名"
                                             />
                                         </div>
                                         <div className="mb-3">
@@ -110,6 +146,7 @@ function LoginRegister() {
                                                 className="form-control bg-light bg-opacity-50"
                                                 id="company_id_number"
                                                 name="company_id_number"
+                                                placeholder="請輸入負責人身分證字號"
                                             />
                                         </div>
                                         <div className="mb-3">
@@ -154,10 +191,10 @@ function LoginRegister() {
                                                 name="company_password"
                                             />
                                         </div>
-                                        <div className="d-grid gap-2">
+                                        <div className="d-grid gap-2 pt-3">
                                             <button
-                                                className="btn btn btncolor btn-block"
                                                 type="submit"
+                                                className="btn btn-primary"
                                             >
                                                 送出
                                             </button>

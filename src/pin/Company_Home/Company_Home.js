@@ -120,6 +120,7 @@ function CompanyHome() {
                                         id="farm_type"
                                         name="farm_type"
                                         required
+                                        disabled
                                         defaultValue={companyHome[0].farm_type}
                                     />
                                 </div>
@@ -137,6 +138,7 @@ function CompanyHome() {
                                         name="farm_name"
                                         placeholder=""
                                         required
+                                        disabled
                                         defaultValue={companyHome[0].farm_name}
                                     />
                                 </div>

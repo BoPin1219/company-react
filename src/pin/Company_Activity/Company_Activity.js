@@ -6,6 +6,7 @@ import axios from 'axios'
 import './company_activity.css'
 
 function CompanyActivity() {
+    const [deleteStatus, setDeleteStatus] = useState(false)
     const navigate = useNavigate()
     const [data, setData] = useState([
         {
@@ -33,15 +34,29 @@ function CompanyActivity() {
     }
     useEffect(() => {
         getdata()
-    }, [])
+    }, [deleteStatus])
+
+    const deleteProduct = async (event) => {
+        setDeleteStatus(false)
+        const r = await fetch('http://localhost:3600/activity/deleteactivity', {
+            method: 'DELETE',
+            headers: {
+                // company_id: loginUser.customer_id,
+                // product_id: event.target.id,
+            },
+        })
+        const obj = await r.json()
+        console.log(obj)
+        setDeleteStatus(true)
+    }
 
     return (
         <div className="activityT">
             <div className="container ">
                 <div className="row justify-content-between align-items-baseline mb-4">
-                    <div className="activityT_name">商品管理</div>
+                    <div className="activityT_name">活動管理</div>
                     <div className="addactivity" onClick={() => goToadd()}>
-                        新增商品
+                        新增活動
                     </div>
                 </div>
                 {data
@@ -70,6 +85,7 @@ function CompanyActivity() {
                                       />
 
                                       <RiDeleteBin6Line
+                                          onClick={deleteProduct}
                                           size={18}
                                           style={{
                                               margin: '0 3px',

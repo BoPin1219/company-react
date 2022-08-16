@@ -130,7 +130,7 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
             Map_b: value.Map_b,
         }
         // console.log(packageToSend)
-        fetch('http://localhost:3600/activity/add', {
+        fetch('http://localhost:3600/activity/edit', {
             method: 'POST',
             body: JSON.stringify(packageToSend),
             headers: {
@@ -140,6 +140,7 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
             .then((r) => r.json())
             .then((obj) => {
                 console.log(obj)
+                sessionStorage.removeItem('activitysid')
             })
     }
 
@@ -420,7 +421,7 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
                                             inesertNewInfo()
                                         }}
                                     >
-                                        新增活動
+                                        修改活動
                                     </div>
                                 </div>
                                 <div

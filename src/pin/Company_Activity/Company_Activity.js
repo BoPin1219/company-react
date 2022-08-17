@@ -30,19 +30,24 @@ function CompanyActivity() {
         const response = await axios.get('http://localhost:3600/activity', {
             headers: { company_id: loginUser.company_id },
         })
-        setData(response.data)
+        const newArrayToShow = response.data.map((v) => {
+            return { ...v, card_img: JSON.parse(v.card_img) }
+        })
+
+        // console.log(response.data)
+        // console.log(JSON.parse(response.data[0].card_img))
+        setData(newArrayToShow)
     }
     useEffect(() => {
         getdata()
     }, [deleteStatus])
 
-    const deleteProduct = async (event) => {
+    const deleteActivity = async (event) => {
         setDeleteStatus(false)
         const r = await fetch('http://localhost:3600/activity/deleteactivity', {
             method: 'DELETE',
             headers: {
-                // company_id: loginUser.customer_id,
-                // product_id: event.target.id,
+                // company_id: loginUser.company_id,
             },
         })
         const obj = await r.json()
@@ -67,7 +72,7 @@ function CompanyActivity() {
                           >
                               <div className="col-auto d-none d-lg-block">
                                   <img
-                                      src={`/images/activity/${row.card_img}`}
+                                      src={`/images/activity/${row.card_img[0]}`}
                                       width="300"
                                       height="213"
                                       alt=""
@@ -85,7 +90,7 @@ function CompanyActivity() {
                                       />
 
                                       <RiDeleteBin6Line
-                                          onClick={deleteProduct}
+                                          onClick={deleteActivity}
                                           size={18}
                                           style={{
                                               margin: '0 3px',

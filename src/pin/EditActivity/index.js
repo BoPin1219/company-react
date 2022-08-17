@@ -32,7 +32,9 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
         Map_a: '',
         Map_b: '',
         company_infoImg: [],
+        card_img: [],
     })
+    const [singleImages, setSingleImages] = useState([])
     const [images, setImages] = useState([])
     const [startDate, setStartDate] = useState(null)
 
@@ -89,6 +91,12 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
         })
         return JSON.stringify(newPicArray)
     }
+    const getSinglePicNewArray = () => {
+        const newPicArray = singleImages.map((v) => {
+            return v.name
+        })
+        return JSON.stringify(newPicArray)
+    }
 
     const getData = () => {
         console.log(company_activity_id)
@@ -99,7 +107,12 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
             .then((r) => r.json())
             .then((obj) => {
                 const newPicArray = JSON.parse(obj[0].company_infoImg)
-                const newOBJ = { ...obj[0], company_infoImg: newPicArray }
+                const newSinglePicArray = JSON.parse(obj[0].card_img)
+                const newOBJ = {
+                    ...obj[0],
+                    company_infoImg: newPicArray,
+                    card_img: newSinglePicArray,
+                }
                 // console.log(newOBJ)
                 setValue(newOBJ)
             })
@@ -113,7 +126,7 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
         const packageToSend = {
             card_area: value.card_area,
             company_id: company_info_id,
-            card_img: 123,
+            card_img: getSinglePicNewArray(),
             company_infoImg: getPicNewArray(),
             address: value.address,
             phone: value.phone,
@@ -407,8 +420,8 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
                                         onBlur={() => {}}
                                     >
                                         <FileUploadSample
-                                            onChange={setImages}
-                                            photos={value.company_infoImg}
+                                            onChange={setSingleImages}
+                                            photos={value.card_img}
                                         />
                                     </div>
                                 </div>

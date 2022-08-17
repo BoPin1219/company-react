@@ -31,7 +31,9 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
         card_e: '',
         Map_b: '',
         company_infoImg: [],
+        card_img: [],
     })
+    const [singleImages, setSingleImages] = useState([])
     const [images, setImages] = useState([])
     const [startDate, setStartDate] = useState(null)
 
@@ -86,12 +88,19 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
         })
         return JSON.stringify(newPicArray)
     }
+    const getSinglePicNewArray = () => {
+        const newPicArray = singleImages.map((v) => {
+            return v.name
+        })
+        // console.log(newPicArray)
+        return JSON.stringify(newPicArray)
+    }
 
     const inesertNewInfo = () => {
         const packageToSend = {
             card_area: value.card_area,
             company_id: company_info_id,
-            card_img: 123,
+            card_img: getSinglePicNewArray(),
             company_infoImg: getPicNewArray(),
             address: value.address,
             phone: value.phone,
@@ -374,10 +383,18 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                     <label className={styles.label}>
                                         活動照片：
                                     </label>
-                                    <div
-                                        className={styles.photos}
-                                        onBlur={() => {}}
-                                    >
+                                    <div className={styles.photos}>
+                                        <FileUploadSample
+                                            onChange={setSingleImages}
+                                            photos={value.card_img}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="col-6">
+                                    <label className={styles.label}>
+                                        活動照片：
+                                    </label>
+                                    <div className={styles.photos}>
                                         <FileUploadSample
                                             onChange={setImages}
                                             photos={value.company_infoImg}

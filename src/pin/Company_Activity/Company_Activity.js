@@ -42,12 +42,15 @@ function CompanyActivity() {
         getdata()
     }, [deleteStatus])
 
-    const deleteActivity = async (event) => {
+    const deleteActivity = async (sid) => {
         setDeleteStatus(false)
         const r = await fetch('http://localhost:3600/activity/deleteactivity', {
             method: 'DELETE',
+            body: JSON.stringify({
+                sid: sid,
+            }),
             headers: {
-                // company_id: loginUser.company_id,
+                'Content-Type': 'application/json',
             },
         })
         const obj = await r.json()
@@ -90,7 +93,9 @@ function CompanyActivity() {
                                       />
 
                                       <RiDeleteBin6Line
-                                          onClick={deleteActivity}
+                                          onClick={() => {
+                                              deleteActivity(row.sid)
+                                          }}
                                           size={18}
                                           style={{
                                               margin: '0 3px',

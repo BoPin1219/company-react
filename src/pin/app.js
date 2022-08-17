@@ -3,7 +3,7 @@ import React from 'react'
 
 import CompanyLogin from './company_Login/company_login'
 import LoginRegister from './company_login_register/login_register'
-import CompanyHome from './company_Home/company_Home'
+import CompanyHome from './company_Home/company_home'
 import CompanyActivity from './Company_Activity/Company_Activity'
 import ManageList from '../page/ManageList'
 import Addactivity from './Addactivity/index'

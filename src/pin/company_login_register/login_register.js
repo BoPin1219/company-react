@@ -15,7 +15,52 @@ function LoginRegister() {
             company_email: document.form1.company_email.value,
             company_password: document.form1.company_password.value,
         }
+        const email_re = new RegExp(
+            '^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$'
+        )
+        const password_re = new RegExp('^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$')
 
+        const farm_name_f = document.form1.farm_name
+        const company_name_f = document.form1.company_name
+        const company_id_number_f = document.form1.company_id_number
+        const company_phone_f = document.form1.company_phone
+        const company_email_f = document.form1.company_email
+        const company_password_f = document.form1.company_password
+
+        const fields = [
+            farm_name_f,
+            company_name_f,
+            company_id_number_f,
+            company_phone_f,
+            company_email_f,
+            company_password_f,
+        ]
+        const fieldTexts = []
+        for (let f of fields) {
+            fieldTexts.push(f.nextElementSibling)
+        }
+
+        for (let i in fields) {
+            fields[i].classList.remove('is-invalid')
+            fieldTexts[i].innerText = ''
+        }
+
+        let isPass = true
+
+        if (farm_name_f.value.length < 1) {
+            fields[0].classList.add('is-invalid')
+            fieldTexts[0].innerText = '廠商名稱為必填'
+            isPass = false
+        }
+        if (company_name_f.value.length < 1) {
+            fields[1].classList.add('is-invalid')
+            fieldTexts[1].innerText = '負責人名稱為必填'
+            isPass = false
+        }
+
+        if (!isPass) {
+            return // 結束函式
+        }
         const r = await fetch('http://localhost:3600/company/register', {
             method: 'post',
             body: JSON.stringify(data),
@@ -96,6 +141,8 @@ function LoginRegister() {
                                         name="form1"
                                         method="post"
                                         onSubmit={checkForm}
+                                        className="needs-validation"
+                                        noValidate
                                     >
                                         <div className="mb-3">
                                             <label
@@ -118,6 +165,7 @@ function LoginRegister() {
                                                 name="farm_name"
                                                 placeholder="請輸入廠商名稱"
                                             />
+                                            <div className="invalid-feedback"></div>
                                         </div>
                                         <div className="mb-3">
                                             <label
@@ -133,6 +181,7 @@ function LoginRegister() {
                                                 name="company_name"
                                                 placeholder="請輸入負責人姓名"
                                             />
+                                            <div className="invalid-feedback"></div>
                                         </div>
                                         <div className="mb-3">
                                             <label
@@ -148,6 +197,7 @@ function LoginRegister() {
                                                 name="company_id_number"
                                                 placeholder="請輸入負責人身分證字號"
                                             />
+                                            <div className="invalid-feedback"></div>
                                         </div>
                                         <div className="mb-3">
                                             <label
@@ -162,6 +212,7 @@ function LoginRegister() {
                                                 id="company_phone"
                                                 name="company_phone"
                                             />
+                                            <div className="invalid-feedback"></div>
                                         </div>
                                         <div className="mb-3">
                                             <label
@@ -176,6 +227,7 @@ function LoginRegister() {
                                                 id="company_email"
                                                 name="company_email"
                                             />
+                                            <div className="invalid-feedback"></div>
                                         </div>
                                         <div className="mb-3">
                                             <label
@@ -190,6 +242,7 @@ function LoginRegister() {
                                                 id="company_password"
                                                 name="company_password"
                                             />
+                                            <div className="invalid-feedback"></div>
                                         </div>
                                         <div className="d-grid gap-2 pt-3">
                                             <button

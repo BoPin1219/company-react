@@ -223,30 +223,23 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                     </div>
                                 </div>
                             </div>
+
                             <div className="row">
                                 <div className="col-6">
                                     <label className={styles.label}>
                                         開放時間：
                                     </label>
-                                    <div className={styles.text}>
-                                        <input
-                                            name="name"
-                                            type="text"
-                                            ref={inputRef}
-                                            style={{ width: '100%' }}
-                                            placeholder="請輸入開放時間"
-                                            value={value.time}
-                                            onChange={(e) =>
-                                                setValue({
-                                                    ...value,
-                                                    time: e.target.value,
-                                                })
-                                            }
-                                        />
-                                    </div>
+                                    <textarea
+                                        value={value.time}
+                                        onChange={(e) =>
+                                            setValue({
+                                                ...value,
+                                                time: e.target.value,
+                                            })
+                                        }
+                                        className={styles.textarea}
+                                    ></textarea>
                                 </div>
-                            </div>
-                            <div className="row">
                                 <div className="col-6">
                                     <label className={styles.label}>
                                         活動介紹：
@@ -279,8 +272,6 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                         className={styles.textarea}
                                     ></textarea>
                                 </div>
-                            </div>
-                            <div className="row">
                                 <div className="col-6">
                                     <label className={styles.label}>
                                         體驗活動：
@@ -297,7 +288,6 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                         className={styles.textarea}
                                     ></textarea>
                                 </div>
-
                                 <div className="col-6">
                                     <label className={styles.label}>
                                         遊覽景點：
@@ -346,7 +336,6 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                         className={styles.textarea}
                                     ></textarea>
                                 </div>
-
                                 <div className="col-6">
                                     <label className={styles.label}>
                                         伴手禮與農特產：
@@ -358,6 +347,22 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
                                             setValue({
                                                 ...value,
                                                 card_e: e.target.value,
+                                            })
+                                        }
+                                        className={styles.textarea}
+                                    ></textarea>
+                                </div>
+                                <div className="col-6">
+                                    <label className={styles.label}>
+                                        地圖導覽：
+                                    </label>
+                                    <textarea
+                                        rows={8}
+                                        value={value.Map_a}
+                                        onChange={(e) =>
+                                            setValue({
+                                                ...value,
+                                                Map_a: e.target.value,
                                             })
                                         }
                                         className={styles.textarea}

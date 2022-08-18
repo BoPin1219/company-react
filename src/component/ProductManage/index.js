@@ -12,7 +12,7 @@ function ProductManage({ onClose, sid }) {
         const data = await getProductItem(sid)
         setData(data)
     }
-    console.log(sid)
+    console.log(sid, data.product_hashtag)
 
     useEffect(() => {
         item(sid)

@@ -93,7 +93,7 @@ function AddProduct({ sid, onClose, onUpdate, isNew }) {
                 const { product_details: details } = data
                 const { product_img: photo } = data
                 const { product_hashtag: hashtag } = data
-
+                console.log(hashtag)
                 const type = _.find(typeOptions, { value: typeValue })
                 const unit = _.find(unitOptions, { value: unitValue })
                 const supplier = _.find(supplierOptions, {
@@ -113,8 +113,13 @@ function AddProduct({ sid, onClose, onUpdate, isNew }) {
                     details,
                     photo,
                 }
+                const tagObj = {}
+                hashtag.forEach((el) => {
+                    tagObj[el] = true
+                })
+
                 setValue(newValue)
-                setAddHashTag(hashtag)
+                setAddHashTag(tagObj)
             }
             item(sid)
         }
@@ -132,7 +137,7 @@ function AddProduct({ sid, onClose, onUpdate, isNew }) {
             return { ...prev, [key]: !value }
         })
 
-        // console.log('handleToggleHashTag', addHashTag)
+        console.log('handleToggleHashTag', addHashTag)
     }
 
     const handleSubmit = async () => {
@@ -155,7 +160,9 @@ function AddProduct({ sid, onClose, onUpdate, isNew }) {
                 pictures = result.data.map((v) => v.name)
             }
 
-            const hashtag = Object.keys(addHashTag).map((key) => +key)
+            const hashtag = Object.keys(addHashTag)
+                .filter((key) => addHashTag[key])
+                .map((el) => +el)
             const newValue = {
                 ...value,
                 type: value.type.value,

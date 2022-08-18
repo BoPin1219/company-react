@@ -413,7 +413,7 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
                                 </div>
                                 <div className="col-6">
                                     <label className={styles.label}>
-                                        活動導覽照片：
+                                        活動宣傳照片：
                                     </label>
                                     <div
                                         className={styles.photos}

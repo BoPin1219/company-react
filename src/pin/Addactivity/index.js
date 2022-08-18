@@ -131,7 +131,9 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
         })
             .then((r) => r.json())
             .then((obj) => {
-                console.log(obj)
+                if (obj.success) {
+                    navigate('/company/activity')
+                }
             })
     }
     const autoInput = () => {

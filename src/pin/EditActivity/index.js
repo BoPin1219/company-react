@@ -142,9 +142,9 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
             Map_a: value.Map_a,
             Map_b: value.Map_b,
         }
-        // console.log(packageToSend)
+
         fetch('http://localhost:3600/activity/edit', {
-            method: 'POST',
+            method: 'PUT',
             body: JSON.stringify(packageToSend),
             headers: {
                 'Content-Type': 'application/json',
@@ -153,7 +153,7 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
             .then((r) => r.json())
             .then((obj) => {
                 console.log(obj)
-                sessionStorage.removeItem('activitysid')
+                // sessionStorage.removeItem('activitysid')
             })
     }
 

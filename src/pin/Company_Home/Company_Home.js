@@ -19,6 +19,8 @@ function CompanyHome() {
             company_id: '',
         },
     ])
+    const [productCount, setProductCount] = useState(0)
+    const [activityCount, setActivitytCount] = useState(0)
 
     const loginUser = JSON.parse(localStorage.getItem('comAuth'))
 
@@ -28,7 +30,33 @@ function CompanyHome() {
         })
         setCompanyHome(response.data)
     }
+    const getProductData = async () => {
+        const result = await axios.get(
+            'http://localhost:3600/company/getproductdata',
+            {
+                headers: { loginUser: loginUser.company_id },
+            }
+        )
+        // console.log(result.data[0].num)
+        setProductCount(result.data[0].num)
+    }
+    const getactivityData = async () => {
+        const result = await axios.get(
+            'http://localhost:3600/company/getactivitydata',
+            {
+                headers: { loginUser: loginUser.company_id },
+            }
+        )
+        // console.log(result)
+        setActivitytCount(result.data[0].num)
+    }
 
+    useEffect(() => {
+        getProductData()
+    }, [])
+    useEffect(() => {
+        getactivityData()
+    }, [])
     useEffect(() => {
         getCompanyHome()
     }, [])
@@ -86,13 +114,17 @@ function CompanyHome() {
                                 <div>
                                     <h6 className="my-0">上架商品總數</h6>
                                 </div>
-                                <span className="text-muted">24件</span>
+                                <span className="text-muted">
+                                    {productCount}件
+                                </span>
                             </li>
                             <li className="list-group-item d-flex justify-content-between lh-sm">
                                 <div>
                                     <h6 className="my-0">上架活動總數</h6>
                                 </div>
-                                <span className="text-muted">5</span>
+                                <span className="text-muted">
+                                    {activityCount}
+                                </span>
                             </li>
                         </ul>
                     </div>

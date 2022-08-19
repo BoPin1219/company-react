@@ -189,7 +189,7 @@ function AddProduct({ sid, onClose, onUpdate, isNew }) {
 
             MySwal.fire({
                 title: <p>資料儲存中</p>,
-                timer: 2000,
+                timer: 1000,
                 timerProgressBar: true,
                 didOpen: () => {
                     MySwal.showLoading()

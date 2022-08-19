@@ -113,9 +113,12 @@ function LoginRegister() {
                     role="dialog"
                     id="modalSignin"
                 >
-                    <div className="modal-dialog " role="document">
+                    <div
+                        className="modal-dialog position-relative"
+                        role="document"
+                    >
                         <div className="modal-content shadow bg-light bg-opacity-50 ">
-                            <div className="btn-group ">
+                            <div className="btn-group  ">
                                 <button
                                     className="btn btn ytbtncolor2"
                                     type="button"
@@ -151,7 +154,7 @@ function LoginRegister() {
                                             >
                                                 廠商名稱：
                                                 <button
-                                                    className="btn btn btn-sm pin-register position-absolute bottom-0 end-0"
+                                                    className="btn btn btn-sm pin-register position-absolute top-0 end-0"
                                                     type="button"
                                                     onClick={autoInput}
                                                 >

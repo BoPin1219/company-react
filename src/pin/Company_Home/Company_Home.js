@@ -239,6 +239,7 @@ function CompanyHome() {
                                         className="form-control"
                                         id="farm_tel"
                                         name="farm_tel"
+                                        disabled
                                         defaultValue={companyHome[0].farm_tel}
                                     />
                                 </div>
@@ -255,6 +256,7 @@ function CompanyHome() {
                                         id="company_phone"
                                         name="company_phone"
                                         pattern="09\d{8}"
+                                        disabled
                                         defaultValue={
                                             companyHome[0].company_phone
                                         }
@@ -272,6 +274,7 @@ function CompanyHome() {
                                         className="form-control"
                                         id="farm_fax"
                                         name="farm_fax"
+                                        disabled
                                         defaultValue={companyHome[0].farm_fax}
                                     />
                                 </div>
@@ -287,6 +290,7 @@ function CompanyHome() {
                                         className="form-control"
                                         id="farm_address"
                                         name="farm_address"
+                                        disabled
                                         defaultValue={
                                             companyHome[0].farm_address
                                         }

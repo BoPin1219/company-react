@@ -55,6 +55,10 @@ function CompanyLogin() {
         Login(obj)
     }
     function autoInput() {
+        document.form1.company_email.value = 'test0824@test.com'
+        document.form1.company_password.value = '123456'
+    }
+    function autoInput1() {
         document.form1.company_email.value = 'test01@gmail.com'
         document.form1.company_password.value = '123456'
     }
@@ -144,6 +148,13 @@ function CompanyLogin() {
                                                         className="btn btn btn-sm pin-btnlogon"
                                                         type="button"
                                                         onClick={autoInput}
+                                                    >
+                                                        註冊快速填寫
+                                                    </button>
+                                                    <button
+                                                        className="btn btn btn-sm pin-btnlogon"
+                                                        type="button"
+                                                        onClick={autoInput1}
                                                     >
                                                         快速填寫
                                                     </button>

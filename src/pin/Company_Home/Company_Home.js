@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 function CompanyHome() {
+    const navigate = useNavigate()
+
     const [companyHome, setCompanyHome] = useState([
         {
             farm_type: '',
@@ -88,10 +92,16 @@ function CompanyHome() {
         })
             .then((r) => r.json())
             .then((obj) => {
-                // console.log(obj)
-                if (obj.success) {
-                    alert('更改成功')
-                }
+                console.log(obj)
+                Swal.fire({
+                    icon: 'success',
+                    title: '修改成功',
+                    showConfirmButton: true,
+                    confirmButtonText: '確認',
+                    confirmButtonColor: '#709D40',
+                }).then(() => {
+                    navigate('/company/companyhome', { replace: true })
+                })
             })
     }
 
@@ -100,34 +110,95 @@ function CompanyHome() {
             {/* {console.log(companyHome[0])} */}
             <div className="container pt-3 ">
                 <div className="row">
-                    <div className="col-md-5 col-lg-4 order-md-last">
-                        <ul className="list-group mb-3">
-                            <li className="list-group-item d-flex justify-content-between lh-sm">
-                                <div>
-                                    <h6 className="my-0">註冊日期</h6>
-                                </div>
-                                <span className="text-muted ">
-                                    {companyHome[0].creat_at}
-                                </span>
-                            </li>
-                            <li className="list-group-item d-flex justify-content-between lh-sm">
-                                <div>
-                                    <h6 className="my-0">上架商品總數</h6>
-                                </div>
-                                <span className="text-muted">
-                                    {productCount}件
-                                </span>
-                            </li>
-                            <li className="list-group-item d-flex justify-content-between lh-sm">
-                                <div>
-                                    <h6 className="my-0">上架活動總數</h6>
-                                </div>
-                                <span className="text-muted">
-                                    {activityCount}
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
+                    {loginUser.farm_type === '認證中' ? (
+                        <div className="col-md-5 col-lg-4 order-md-last">
+                            <ul className="list-group mb-3">
+                                <li className="list-group-item d-flex justify-content-between lh-sm">
+                                    <div>
+                                        <h6 className="my-0">註冊日期</h6>
+                                    </div>
+                                    <span className="text-muted ">
+                                        {companyHome[0].creat_at}
+                                    </span>
+                                </li>
+                                <li className="list-group-item d-flex justify-content-between lh-sm">
+                                    <div>
+                                        <h6 className="my-0">上架商品總數</h6>
+                                    </div>
+                                    <span className="text-muted">
+                                        {productCount}件
+                                    </span>
+                                </li>
+                                <li className="list-group-item d-flex justify-content-between lh-sm">
+                                    <div>
+                                        <h6 className="my-0">上架活動總數</h6>
+                                    </div>
+                                    <span className="text-muted">
+                                        {activityCount}
+                                    </span>
+                                </li>
+                            </ul>
+                            <div className="modal-body p-2  ">
+                                <h3 className="fw-bold text-danger ">
+                                    此帳戶審核中
+                                </h3>
+                                <ul className="d-grid gap-4  list-unstyled">
+                                    <li className="d-flex gap-4">
+                                        <div>
+                                            <h5 className=" text-warning">
+                                                貼心體醒您
+                                            </h5>
+                                            提供「有機農產品驗證證書」、「有機農產品檢驗證書」及「貨款匯款帳
+                                            戶影本」，並填妥「有機小鱻肉」有機小農上架申請表後，郵寄本公司辦理，經審核通過後，立即由專人開通上架活動及上架商品。
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="col-md-5 col-lg-4 order-md-last">
+                            <ul className="list-group mb-3">
+                                <li className="list-group-item d-flex justify-content-between lh-sm">
+                                    <div>
+                                        <h6 className="my-0">註冊日期</h6>
+                                    </div>
+                                    <span className="text-muted ">
+                                        {companyHome[0].creat_at}
+                                    </span>
+                                </li>
+                                <li className="list-group-item d-flex justify-content-between lh-sm">
+                                    <div>
+                                        <h6 className="my-0">上架商品總數</h6>
+                                    </div>
+                                    <span className="text-muted">
+                                        {productCount}件
+                                    </span>
+                                </li>
+                                <li className="list-group-item d-flex justify-content-between lh-sm">
+                                    <div>
+                                        <h6 className="my-0">上架活動總數</h6>
+                                    </div>
+                                    <span className="text-muted">
+                                        {activityCount}
+                                    </span>
+                                </li>
+                            </ul>
+                            <div className="modal-body p-2  ">
+                                <h3 className="fw-bold text-danger ">
+                                    帳戶認證成功
+                                </h3>
+                                <ul className="d-grid gap-4  list-unstyled">
+                                    <li className="d-flex gap-4">
+                                        <div>
+                                            <h5 className="">貼心體醒您</h5>
+                                            活動介紹、產品說明及照片等宣傳資料予本公司進行上網刊登銷售已開通
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    )}
+
                     <div className="col-md-7 col-lg-8">
                         <h4 className="mb-3">廠商基本資料</h4>
                         <form

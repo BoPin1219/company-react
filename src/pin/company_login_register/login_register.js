@@ -57,6 +57,26 @@ function LoginRegister() {
             fieldTexts[1].innerText = '負責人名稱為必填'
             isPass = false
         }
+        if (company_id_number_f.value.length < 10) {
+            fields[2].classList.add('is-invalid')
+            fieldTexts[2].innerText = '身分證字號必填'
+            isPass = false
+        }
+        if (company_phone_f.value.length < 10) {
+            fields[3].classList.add('is-invalid')
+            fieldTexts[3].innerText = '手機號碼必填'
+            isPass = false
+        }
+        if (company_email_f.value.length < 1) {
+            fields[4].classList.add('is-invalid')
+            fieldTexts[4].innerText = '帳號必填'
+            isPass = false
+        }
+        if (company_password_f.value.length < 1) {
+            fields[5].classList.add('is-invalid')
+            fieldTexts[5].innerText = '密碼必填'
+            isPass = false
+        }
 
         if (!isPass) {
             return // 結束函式

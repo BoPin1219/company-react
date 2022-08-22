@@ -10,6 +10,7 @@ function CompanyNavbar() {
         logout()
     }
     const loginUser = JSON.parse(localStorage.getItem('comAuth'))
+    // console.log(loginUser)
     const navigate = useNavigate()
 
     // function verifyCom (){
@@ -72,7 +73,12 @@ function CompanyNavbar() {
                             {authorized ? (
                                 <Link
                                     to="./company/activity"
-                                    className="nav-link companynabercolor"
+                                    className={
+                                        loginUser.farm_type === '認證中'
+                                            ? 'nav-link notlogincompanynabercolor'
+                                            : 'nav-link companynabercolor'
+                                    }
+
                                     // onClick={()=>{verifyCom()}}
                                 >
                                     <svg
@@ -95,7 +101,11 @@ function CompanyNavbar() {
                             {authorized ? (
                                 <Link
                                     to="./company/product"
-                                    className="nav-link companynabercolor"
+                                    className={
+                                        loginUser.farm_type === '認證中'
+                                            ? 'nav-link notlogincompanynabercolor'
+                                            : 'nav-link companynabercolor'
+                                    }
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"

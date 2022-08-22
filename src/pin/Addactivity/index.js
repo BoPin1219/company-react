@@ -8,7 +8,7 @@ import { submitData, uploadImages, changeData } from '../../api/root'
 import { getProductItem } from '../../api/product'
 import { GrClose } from 'react-icons/gr'
 import { useNavigate } from 'react-router-dom'
-
+import Swal from 'sweetalert2'
 import { format } from 'date-fns'
 
 Modal.setAppElement('#root')
@@ -132,7 +132,15 @@ function Addactivity({ sid, onClose, onUpdate, isNew }) {
             .then((r) => r.json())
             .then((obj) => {
                 if (obj.success) {
-                    navigate('/company/activity')
+                    Swal.fire({
+                        icon: 'success',
+                        title: '新增成功',
+                        showConfirmButton: true,
+                        confirmButtonText: '確認',
+                        confirmButtonColor: '#709D40',
+                    }).then(() => {
+                        navigate('/company/activity', { replace: true })
+                    })
                 }
             })
     }

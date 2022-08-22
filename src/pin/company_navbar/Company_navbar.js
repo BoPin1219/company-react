@@ -2,12 +2,21 @@ import './Company_navbar.css'
 import { Link } from 'react-router-dom'
 import AuthContext from '../component/authContext'
 import React, { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function CompanyNavbar() {
     const { authorized, logout } = useContext(AuthContext)
     const companyLogout = () => {
         logout()
     }
+    const loginUser = JSON.parse(localStorage.getItem('comAuth'))
+    const navigate = useNavigate()
+
+    // function verifyCom (){
+    //     if(loginUser.farm_type === '認證中'){
+    //         alert('無法使用')
+    //     }
+    // }
 
     return (
         <div className="px-3 pt-2 px-5 text-white ">
@@ -64,6 +73,7 @@ function CompanyNavbar() {
                                 <Link
                                     to="./company/activity"
                                     className="nav-link companynabercolor"
+                                    // onClick={()=>{verifyCom()}}
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"

@@ -5,6 +5,7 @@ import Modal from 'react-modal'
 import FileUploadSample from '../../component/FileUploadSample'
 import { uploadImages } from '../../api/root'
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 Modal.setAppElement('#root')
 function Editactivity({ sid, onClose, onUpdate, isNew }) {
@@ -141,6 +142,7 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
             card_e: value.card_e,
             Map_a: value.Map_a,
             Map_b: value.Map_b,
+            company_activity_id: company_activity_id,
         }
 
         fetch('http://localhost:3600/activity/edit', {
@@ -153,6 +155,15 @@ function Editactivity({ sid, onClose, onUpdate, isNew }) {
             .then((r) => r.json())
             .then((obj) => {
                 console.log(obj)
+                Swal.fire({
+                    icon: 'success',
+                    title: '修改成功',
+                    showConfirmButton: true,
+                    confirmButtonText: '確認',
+                    confirmButtonColor: '#709D40',
+                }).then(() => {
+                    navigate('/company/activity', { replace: true })
+                })
                 // sessionStorage.removeItem('activitysid')
             })
     }
